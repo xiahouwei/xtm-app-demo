@@ -1,0 +1,39 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_proj/theme/xtm_color.dart';
+import 'package:flutter_proj/xtmdesign_component/xtm_design.dart';
+
+class MessagePage extends StatefulWidget {
+  MessagePage({Key key}) : super(key: key);
+  @override
+  State<MessagePage> createState() => MessagePageState();
+}
+
+class MessagePageState extends State<MessagePage> {
+  int count = 1;
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: XtmColor.bgColor,
+      appBar: XtmAppBar(title: '消息'),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
+        child: buildContentWidget(),
+      ),
+    );
+  }
+
+  Widget buildContentWidget() {
+    return Text('消息-第${count}次进入');
+  }
+
+  void appRefresh() {
+    setState(() {
+      count++;
+    });
+  }
+}

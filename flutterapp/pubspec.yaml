@@ -1,0 +1,85 @@
+name: flutter_proj
+description: 运输公司端
+
+publish_to: 'none'
+
+# version: 1.0.0   #release
+version: 3.10.2   #dev
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  flutter_localizations:
+    sdk: flutter
+  webview_flutter:
+    path: plugins/webview_flutter
+  event_bus: 2.0.1
+  # 状态管理
+  provider: 6.0.1
+  # 网络框架
+  dio: 4.0.1
+  # 刷新加载
+  pull_to_refresh: 2.0.0
+  # 通过url打开外置app或者浏览器
+  url_launcher: 6.1.5
+  # 提供文件路径
+  path_provider: 2.0.9
+  # 本地文件存储
+  shared_preferences: 2.0.13
+  # 打包信息
+  package_info_plus: 1.4.0
+  # app安装
+  install_plugin_v2: 1.0.0
+  #高德地图
+  amap_flutter_map: 3.0.0
+  # 高精度数字处理
+  decimal: 1.5.0
+  # 加载loading
+  bot_toast: 4.1.0
+  # 格式化
+  intl: 0.17.0
+  # 日期选择器
+  flutter_datetime_picker_plus: 2.0.0+1
+  # 图片选择
+  image_picker: 0.8.6+1
+  # 图片压缩
+  flutter_image_compress: 2.0.0
+  flutter_image_compress_common: 1.0.3
+  # 权限
+  permission_handler: 10.4.3
+  # 设备信息
+  device_info_plus: 4.0.0
+  # 顶部下拉筛选菜单
+  gzx_dropdown_menu: 3.1.0
+  # md5加密
+  crypto: 3.0.1
+  # 文件选择器
+  file_picker: 4.6.1
+  # 录音功能
+  flutter_plugin_record_plus: 0.0.15
+
+  # 调试工具
+  flutter_ume: 1.1.0
+  flutter_ume_kit_dio: 1.0.1+2
+  flutter_ume_kit_console: 1.0.0
+  flutter_ume_kit_perf: 1.0.0
+
+dev_dependencies:
+  pretty_dio_logger: 1.2.0-beta-1
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/tabbar/
+    - assets/images/mine/
+    - assets/images/login/
+    - assets/images/widgets/
+    - assets/images/placeholder/
+    - assets/images/version_update/
+    - lib/xtmdesign_component/assets/images/

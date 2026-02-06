@@ -1,0 +1,6 @@
+#include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"
+#include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.sit_debug.xcconfig"
+#include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.uat_debug.xcconfig"
+#include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.slw_debug.xcconfig"
+#include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.shanghuawei_debug.xcconfig"
+#include "Generated.xcconfig"
