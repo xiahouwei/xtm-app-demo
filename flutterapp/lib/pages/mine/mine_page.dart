@@ -97,12 +97,7 @@ class MinePageState extends State<MinePage> {
       fit: BoxFit.fill,
       width: 70,
       height: 70,
-      errorBuilder: (_, __, ___) {
-        return Image.asset(
-          'assets/images/mine/mine_avatar_icon.png',
-          width: 80,
-        );
-      },
+      errorImgPath: 'assets/images/mine/mine_avatar_icon.png',
     );
   }
 

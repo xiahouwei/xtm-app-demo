@@ -1,79 +1,38 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_proj/theme/xtm_color.dart';
+import 'package:flutter_proj/xtmdesign_component/src/components/toast/xtm_toast.dart';
 import 'package:url_launcher/url_launcher_string.dart';
-import 'package:flutter_proj/xtmdesign_component/xtm_design.dart';
-import 'package:flutter_proj/common/event_bus/event_bus.dart';
-import 'package:flutter_proj/common/event_bus/event_bus_type.dart';
-import 'package:flutter_proj/store/global_store.dart';
 
 class ProgressIndicatorManage {
-  static Future showProgressIndicator(BuildContext context,
-      {String downloadUrl, String boxUrl}) async {
+  static Future showProgressIndicator(BuildContext context) async {
     List modelArr = await showDialog(
         context: context,
         barrierColor: Color.fromRGBO(14, 14, 14, 0.5),
         barrierDismissible: false,
         builder: (ctx) {
-          return UpdateWidget(
-            downloadUrl: downloadUrl,
-            boxUrl: boxUrl,
-          );
+          return UpdateWidget();
         });
     return modelArr;
   }
 }
 
 class UpdateWidget extends StatefulWidget {
-  final String downloadUrl;
-  final String boxUrl;
-  UpdateWidget({@required this.downloadUrl, @required this.boxUrl});
-
   @override
   _UpdateWidgetState createState() => _UpdateWidgetState();
 }
 
 class _UpdateWidgetState extends State<UpdateWidget> {
   int _totalReceive = 0;
-  StreamSubscription _progressSub;
-
-  @override
-  void initState() {
-    super.initState();
-    _progressSub = eventBus.on(EventBusType.PROGRESS_UPDATE, (data) {
-      calculateNum('${xtmGlobalStore.system.receiveCount}');
-    });
-  }
-
-  @override
-  void dispose() {
-    _progressSub?.cancel();
-    super.dispose();
-  }
 
   void calculateNum(String receiveCount) {
     if (receiveCount != null && receiveCount.isNotEmpty) {
       int rec = int.parse(receiveCount);
-      if (rec == _totalReceive) {
-        ///与上次相同，就不处理了
-      } else {
-        ///有增加
+      if (rec != _totalReceive) {
         _totalReceive = rec;
-        print('---下载进度-----$rec----');
         setState(() {});
       }
-    }
-  }
-
-  void openBrowser(String url) async {
-    if (url == null || url.isEmpty) {
-      XtmToast.warn('无法获取下载链接，请重试');
-      return;
-    }
-    if (await canLaunchUrlString(url)) {
-      await launchUrlString(url, mode: LaunchMode.externalApplication);
-    } else {
-      XtmToast.warn('无法打开浏览器,请检查是否安装浏览器');
     }
   }
 
@@ -113,52 +72,10 @@ class _UpdateWidgetState extends State<UpdateWidget> {
                           )
                         ],
                       ),
-                      SizedBox(
-                        height: 35,
-                      ),
+                      SizedBox(height: 35),
                       progressWidget(),
-                      SizedBox(
-                        height: 30,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 30),
-                        child: textWidget(
-                            title: '若当前下载较慢，可使用网盘下载',
-                            fontSize: 14,
-                            fontWeight: FontWeight.bold,
-                            color: XtmColor.themeColor),
-                      ),
-                      SizedBox(
-                        height: 36,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          downButtonWidget(
-                              title: '官网下载',
-                              onTap: () {
-                                Navigator.of(context).pop();
-                                openBrowser(widget.downloadUrl);
-                              }),
-                          Offstage(
-                              offstage: (widget.boxUrl == null || widget.boxUrl.isEmpty),
-                              child: SizedBox(
-                                width: 20,
-                              )),
-                          Offstage(
-                            offstage: (widget.boxUrl == null || widget.boxUrl.isEmpty),
-                            child: downButtonWidget(
-                                title: '网盘下载',
-                                onTap: () {
-                                  Navigator.of(context).pop();
-                                  openBrowser(widget.boxUrl);
-                                }),
-                          ),
-                        ],
-                      ),
-                      SizedBox(
-                        height: 22,
-                      ),
+                      SizedBox(height: 30),
+                      SizedBox(height: 22),
                     ],
                   ),
                 ),
@@ -210,7 +127,7 @@ class _UpdateWidgetState extends State<UpdateWidget> {
               child: Text(
             '$_totalReceive%',
             style: TextStyle(
-                color: XtmColor.themeColor,
+                color: XtmColor.black,
                 fontSize: 16,
                 fontWeight: FontWeight.w700,
                 decoration: TextDecoration.none),
@@ -229,17 +146,25 @@ class _UpdateWidgetState extends State<UpdateWidget> {
             decoration: TextDecoration.none));
   }
 
+  void openBrowser(String url) async {
+    if (await canLaunchUrlString(url)) {
+      await launchUrlString(url, mode: LaunchMode.externalApplication);
+    } else {
+      XtmToast.warn('无法打开浏览器,请检查是否安装浏览器');
+    }
+  }
+
   Widget downButtonWidget({String title, GestureTapCallback onTap}) {
     return GestureDetector(
       child: Container(
-        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 26),
+        padding: EdgeInsets.symmetric(vertical: 12, horizontal: 26),
         decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(45 / 2.0),
             gradient: LinearGradient(colors: [
               Color.fromRGBO(35, 115, 251, 1.0),
               Color.fromRGBO(15, 168, 254, 1.0),
             ])),
-        child: textWidget(title: title, fontSize: 13, color: Colors.white),
+        child: textWidget(title: title, fontSize: 14, color: Colors.white),
       ),
       onTap: onTap,
     );
@@ -265,7 +190,6 @@ class _ProgressDemoState extends State<ProgressDemo> {
         alignment: Alignment.topCenter,
         child: TextButton(
           child: Text('进度'),
-          // color: Colors.blue,
           onPressed: () {
             return showDialog(
               context: context,

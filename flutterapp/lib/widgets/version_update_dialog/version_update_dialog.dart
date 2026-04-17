@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_proj/widgets/versionUpdateDialog/version_update_widget.dart';
 import 'package:flutter_proj/store/global_store.dart';
+import 'package:flutter_proj/widgets/version_update_dialog/version_update_widget.dart';
 
 void xtmShowVersionUpdateDialog(BuildContext context,
     {bool barrierDismissible = false,

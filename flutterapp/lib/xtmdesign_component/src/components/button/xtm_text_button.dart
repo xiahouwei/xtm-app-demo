@@ -55,6 +55,15 @@ class XtmTextButton extends StatelessWidget {
   /// 点击事件
   final VoidCallback onPressed;
 
+  /// 自定义文字左侧图标
+  final Widget leftIcon;
+
+  /// 自定义文字右侧图标
+  final Widget rightIcon;
+
+  /// 水平内边距
+  final num horizontalPadding;
+
   XtmTextButton({
     Key key,
     this.onPressed,
@@ -68,6 +77,9 @@ class XtmTextButton extends StatelessWidget {
     this.isOval = false,
     this.width,
     this.height,
+    this.leftIcon,
+    this.rightIcon,
+    this.horizontalPadding = 12.0,
   }) : super(key: key);
 
   @override
@@ -78,27 +90,39 @@ class XtmTextButton extends StatelessWidget {
       child: TextButton(
         onPressed: enabled ? onPressed : null,
         style: TextButton.styleFrom(
-          padding: const EdgeInsets.symmetric(horizontal: 12.0),
+          padding: EdgeInsets.symmetric(horizontal: horizontalPadding.toDouble()),
           alignment: Alignment.center,
           minimumSize: Size.zero,
           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
           primary: Colors.black87,
-          backgroundColor: enabled ? backgroundColor ?? xtmDesignConfig.mainColor : Colors.grey,
+          backgroundColor:
+              enabled ? backgroundColor ?? xtmDesignConfig.mainColor : xtmDesignConfig.enableColor,
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(isOval ? 200.0 : borderRadius),
             side: BorderSide(
-              color: enabled ? borderSideColor ?? xtmDesignConfig.mainColor : Colors.grey,
+              color: enabled
+                  ? borderSideColor ?? xtmDesignConfig.mainColor
+                  : xtmDesignConfig.enableColor,
               width: 1.0,
             ),
           ),
         ),
-        child: Text(
-          text,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-            color: textColor,
-            fontSize: fontSize,
-          ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            leftIcon ?? SizedBox(),
+            leftIcon != null ? SizedBox(width: 5.0) : SizedBox(),
+            Text(
+              text,
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: textColor,
+                fontSize: fontSize,
+              ),
+            ),
+            rightIcon ?? SizedBox(),
+          ],
         ),
       ),
     );

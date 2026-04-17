@@ -29,7 +29,7 @@ class MyApp extends StatelessWidget {
     final botToastBuilder = BotToastInit();
     return UiInit.buildUi(
       MaterialApp(
-        title: '运输公司端',
+        title: 'OBD管理系统',
         initialRoute: _handleRedirect(),
         routes: AppRoutes.routes,
         navigatorKey: NavigatorProvider.navigatorKey,

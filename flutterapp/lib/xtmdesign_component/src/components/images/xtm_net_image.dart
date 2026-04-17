@@ -17,7 +17,7 @@ import 'package:flutter_proj/xtmdesign_component/xtm_design.dart';
 ///    height: height,
 ///    fit: fit,
 ///    placeholderPath: ImageConstants.getPlaceholderImagePath(placeholderType),
-///    errorBuilder: errorBuilder,
+///    errorImgPath: '',
 ///  );
 /// ```
 
@@ -27,42 +27,69 @@ class XtmNetImage {
     String token,
     double width,
     double height,
+    String imgDesc,
     BoxFit fit,
     String placeholderPath,
-    Widget Function(BuildContext, Object, StackTrace) errorBuilder,
+    String errorImgPath,
   }) {
-    return Image(
-      image: _XTMNetworkImager(imgUrl, token: token),
-      width: width,
-      height: height,
-      fit: fit,
-      errorBuilder: errorBuilder ??
-          (_, __, ___) {
-            return Image.asset(
-              placeholderPath ?? 'lib/xtmdesign_component/assets/images/img_placeholder.png',
-              width: width,
-              height: height,
-              fit: BoxFit.fill,
-            );
-          },
-      loadingBuilder: (context, child, loadingProgress) {
-        if (loadingProgress == null) {
-          return child;
-        }
-        return Container(
-          width: width,
-          height: height,
-          color: Colors.blue.withOpacity(0.1),
-          child: Center(
-            child: CircularProgressIndicator(
-              backgroundColor: Colors.grey[300],
-              color: xtmDesignConfig.mainColor,
-              strokeWidth: 2,
-              value: loadingProgress.cumulativeBytesLoaded / loadingProgress.expectedTotalBytes,
-            ),
-          ),
-        );
-      },
+    return Column(
+      children: [
+        (imgUrl == null || imgUrl.isEmpty)
+            ? Image.asset(
+                placeholderPath ?? 'lib/xtmdesign_component/assets/images/img_placeholder.png',
+                width: width,
+                height: height,
+                fit: fit,
+              )
+            : Image(
+                image: _XTMNetworkImager(imgUrl, token: token),
+                width: width,
+                height: height,
+                fit: fit,
+                errorBuilder: (_, __, ___) {
+                  return Image.asset(
+                    errorImgPath ?? 'lib/xtmdesign_component/assets/images/img_error.png',
+                    width: width,
+                    height: height,
+                    fit: fit,
+                  );
+                },
+                loadingBuilder: (context, child, loadingProgress) {
+                  if (loadingProgress == null) {
+                    return child;
+                  }
+                  return Container(
+                    width: width,
+                    height: height,
+                    color: Colors.blue.withOpacity(0.1),
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        backgroundColor: Colors.grey[300],
+                        color: xtmDesignConfig.mainColor,
+                        strokeWidth: 2,
+                        value: loadingProgress.cumulativeBytesLoaded /
+                            loadingProgress.expectedTotalBytes,
+                      ),
+                    ),
+                  );
+                },
+              ),
+        SizedBox(width: 5),
+        imgDesc == null
+            ? SizedBox()
+            : ConstrainedBox(
+                constraints: BoxConstraints(maxWidth: width - 20),
+                child: Text(
+                  imgDesc,
+                  softWrap: true,
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 13,
+                    color: xtmDesignConfig.mainTextColor,
+                  ),
+                ),
+              ),
+      ],
     );
   }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.tjxtm.tmstransport">
+    package="com.tjxtm.lpdriver">
 
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
@@ -50,7 +50,7 @@
 
         <meta-data
             android:name="com.amap.api.v2.apikey"
-            android:value="13301e6a5746b5d8a3a9196ed67b0f50" />
+            android:value="40a856c8cbc65117a91cc850a7a5740c" />
 
         <service android:name="com.amap.api.location.APSService" />
 

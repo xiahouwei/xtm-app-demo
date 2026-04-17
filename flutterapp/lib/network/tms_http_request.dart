@@ -1,17 +1,19 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:dio/dio.dart';
+
 import 'package:crypto/crypto.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter_proj/network/http_config.dart';
-import 'package:flutter_proj/store/global_store.dart';
-import 'package:flutter_proj/network/http_response_code.dart';
 import 'package:flutter_proj/network/http_manager.dart';
+import 'package:flutter_proj/network/http_response_code.dart';
+import 'package:flutter_proj/store/global_store.dart';
+import 'package:flutter_proj/utils/navigator_provider_utils.dart';
 import 'package:flutter_proj/widgets/show_invalidate_token_dialog.dart';
 import 'package:flutter_proj/xtmdesign_component/xtm_design.dart';
-import 'package:flutter_proj/utils/navigator_provider_utils.dart';
 
 class TmsHttpRequest {
   static String TMS_SERVER_PATH = '/api/';
+
   static String getBaseUrl() {
     return '${HTTPConfig.serverDomain}${TmsHttpRequest.TMS_SERVER_PATH}';
   }

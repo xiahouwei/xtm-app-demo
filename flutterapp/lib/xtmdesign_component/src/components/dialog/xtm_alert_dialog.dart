@@ -24,6 +24,8 @@ class XtmAlertDialog {
     Widget customContent,
     String rightBtnTitle,
     Color rightBtnTitleColor,
+    bool showDialogButton = true,
+    bool showCloseIcon = false,
     bool barrierDismissible = false,
     XtmDialogButtonStyle buttonStyle = XtmDialogButtonStyle.text,
 
@@ -42,7 +44,8 @@ class XtmAlertDialog {
         formKey: formKey,
         buttonStyle: buttonStyle,
         dialogType: XtmDialogType.alert,
-        showCloseIcon: false,
+        showCloseIcon: showCloseIcon,
+        showDialogButton: showDialogButton,
       ),
     );
     if (action == XtmDialogAction.confirm) {

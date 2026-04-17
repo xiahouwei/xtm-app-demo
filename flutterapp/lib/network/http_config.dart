@@ -1,8 +1,8 @@
 import 'dart:io';
 
-import 'package:package_info_plus/package_info_plus.dart';
-import 'package:flutter_proj/network/http_server_domain.dart';
 import 'package:flutter_proj/network/http_chat_domain.dart';
+import 'package:flutter_proj/network/http_server_domain.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 enum UME_KIT { OPEN, CLOSE }
 enum HTTP_REQUEST_APP_TYPE { NORMAL, TMS }
@@ -11,7 +11,8 @@ class ApiVersionIosConstants {
   static const RELEASE = '1.0.0';
   static const PRE = '1.0.0';
   static const DEV = '1.0.0';
-  static const SIT3 = '3.3.1';
+  static const SIT3 = '3.10.6';
+  static const QA = '3.3.1';
 }
 
 class EnvConfig {
@@ -38,8 +39,8 @@ class EnvConfig {
   static const Map<String, EnvConfig> _envConfigMap = {
     'release': EnvConfig(
       serverDomainType: ServerDomainType.RELEASE,
-      chatDomain: ChatServerDomainConstants.RELEASE,
-      chatServiceDomain: ChatWebDomainConstants.RELEASE,
+      chatDomain: ChatWebDomainConstants.RELEASE,
+      chatServiceDomain: ChatServerDomainConstants.RELEASE,
       apiVersionIOS: ApiVersionIosConstants.RELEASE,
       dioKit: UME_KIT.CLOSE,
       umeKit: UME_KIT.CLOSE,
@@ -47,8 +48,8 @@ class EnvConfig {
     ),
     'pre': EnvConfig(
       serverDomainType: ServerDomainType.PRE,
-      chatDomain: ChatServerDomainConstants.PRE,
-      chatServiceDomain: ChatWebDomainConstants.PRE,
+      chatDomain: ChatWebDomainConstants.PRE,
+      chatServiceDomain: ChatServerDomainConstants.PRE,
       apiVersionIOS: ApiVersionIosConstants.PRE,
       dioKit: UME_KIT.CLOSE,
       umeKit: UME_KIT.CLOSE,
@@ -56,17 +57,44 @@ class EnvConfig {
     ),
     'dev': EnvConfig(
       serverDomainType: ServerDomainType.DEV,
-      chatDomain: ChatServerDomainConstants.DEV,
-      chatServiceDomain: ChatWebDomainConstants.DEV,
+      chatDomain: ChatWebDomainConstants.DEV,
+      chatServiceDomain: ChatServerDomainConstants.DEV,
       apiVersionIOS: ApiVersionIosConstants.DEV,
+      dioKit: UME_KIT.OPEN,
+      umeKit: UME_KIT.CLOSE,
+      apiLog: true,
+    ),
+    'sit3': EnvConfig(
+      serverDomainType: ServerDomainType.SIT3,
+      chatDomain: ChatWebDomainConstants.SIT3,
+      chatServiceDomain: ChatServerDomainConstants.SIT3,
+      apiVersionIOS: ApiVersionIosConstants.SIT3,
+      dioKit: UME_KIT.OPEN,
+      umeKit: UME_KIT.CLOSE,
+      apiLog: true,
+    ),
+    'qa': EnvConfig(
+      serverDomainType: ServerDomainType.QA,
+      chatDomain: ChatWebDomainConstants.QA,
+      chatServiceDomain: ChatServerDomainConstants.QA,
+      apiVersionIOS: ApiVersionIosConstants.QA,
       dioKit: UME_KIT.OPEN,
       umeKit: UME_KIT.CLOSE,
       apiLog: true,
     ),
     'shw': EnvConfig(
       serverDomainType: ServerDomainType.SIT3,
-      chatDomain: ChatServerDomainConstants.SIT3,
-      chatServiceDomain: ChatWebDomainConstants.SIT3,
+      chatDomain: ChatWebDomainConstants.SIT3,
+      chatServiceDomain: ChatServerDomainConstants.SIT3,
+      apiVersionIOS: ApiVersionIosConstants.SIT3,
+      dioKit: UME_KIT.OPEN,
+      umeKit: UME_KIT.CLOSE,
+      apiLog: false,
+    ),
+    'slw': EnvConfig(
+      serverDomainType: ServerDomainType.SIT3,
+      chatDomain: ChatWebDomainConstants.SIT3,
+      chatServiceDomain: ChatServerDomainConstants.SIT3,
       apiVersionIOS: ApiVersionIosConstants.SIT3,
       dioKit: UME_KIT.OPEN,
       umeKit: UME_KIT.CLOSE,
@@ -84,6 +112,8 @@ class EnvConfig {
 class HTTPConfig {
   static String appKey = 'oSTkfoDh9nk6nPNe3Azhgt';
   static String appSecret = '2CtFi6gzDb2Hq3rRPQzhgt';
+  static String aMapKeyAndroid = '40a856c8cbc65117a91cc850a7a5740c';
+  static String aMapKeyIOS = 'c54eac435e435bb98176bdd07f8a1e03';
   static String serverDomain = '';
   static String chatDomain = '';
   static String chatServiceDomain = '';
@@ -92,9 +122,10 @@ class HTTPConfig {
   static String apiVersion = '1.0.0';
   static String bundleID = 'com.tjxtm.tmstransport';
   static String baseToken = 'Basic bHBEcml2ZXJBcHA6QWExMjM0NTY=';
-  static String terminal = 'operation';
+  static String terminal = 'transport';
   static HTTP_REQUEST_APP_TYPE appType = HTTP_REQUEST_APP_TYPE.TMS;
   static bool API_LOG = false;
+
   static String get getHost {
     String domain = HTTPConfig.serverDomain;
     RegExp regex = RegExp(r'/tms$');

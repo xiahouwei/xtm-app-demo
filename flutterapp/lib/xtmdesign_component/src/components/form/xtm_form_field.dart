@@ -123,7 +123,7 @@ class XtmFormFieldState extends State<XtmFormField> with WidgetsBindingObserver 
       children: [
         Row(
           children: [
-            SizedBox(width: 15),
+            SizedBox(width: 10),
             widget.isRequired
                 ? Text('*',
                     strutStyle: StrutStyle(height: 1.5, leading: 0.0, forceStrutHeight: true),
@@ -158,7 +158,7 @@ class XtmFormFieldState extends State<XtmFormField> with WidgetsBindingObserver 
       alignment: Alignment.centerRight,
       child: widget.isReadOnly
           ? Padding(
-              padding: const EdgeInsets.symmetric(vertical: 17.0),
+              padding: const EdgeInsets.symmetric(vertical: 13.0),
               child: Text(
                 widget.initialValue,
                 maxLines: 2,

@@ -10,9 +10,9 @@ class XtmCityPicker {
     BuildContext context, {
     String selectItem,
     String title = '请选择地区',
-    double height = 250.0,
+    double height = 300.0,
     bool isDismissible = true,
-    Function(ProvinceModel province, CityModel city, CountryModel country) onSelected,
+    Function(ProvinceModel province, CityModel city, CountryModel country, int areaCode) onSelected,
   }) {
     FocusScope.of(context).unfocus();
     showModalBottomSheet(
@@ -22,6 +22,7 @@ class XtmCityPicker {
       builder: (ctx) {
         return _XtmCityPickerContent(
           title: title,
+          height: height,
           onSelected: onSelected,
         );
       },
@@ -32,14 +33,17 @@ class XtmCityPicker {
 class _XtmCityPickerContent extends StatefulWidget {
   /// 标题
   final String title;
+  final double height;
   final Function(
     ProvinceModel province,
     CityModel city,
     CountryModel country,
+    int areaCode,
   ) onSelected;
 
   _XtmCityPickerContent({
     this.title,
+    this.height,
     this.onSelected,
   });
 
@@ -92,7 +96,7 @@ class _XtmCityPickerState extends State<_XtmCityPickerContent> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 250.0,
+      height: widget.height,
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.horizontal(
@@ -105,23 +109,7 @@ class _XtmCityPickerState extends State<_XtmCityPickerContent> {
         children: [
           BottomSheetHeader(
             title: widget.title,
-            confirmAction: () {
-              widget.onSelected(
-                ProvinceModel(
-                  provinceID: provinces[_selectedProvinceIndex].provinceID,
-                  provinceName: provinces[_selectedProvinceIndex].provinceName,
-                ),
-                CityModel(
-                  cityID: cities[_selectedCityIndex].cityID,
-                  cityName: cities[_selectedCityIndex].cityName,
-                ),
-                CountryModel(
-                  countryID: countries[_selectedCountryIndex].countryID,
-                  countryName: countries[_selectedCountryIndex].countryName,
-                ),
-              );
-              Navigator.of(context).pop();
-            },
+            confirmAction: () => _onConfirm(),
           ),
           _buildHorizontalDivider(),
           Expanded(
@@ -198,5 +186,30 @@ class _XtmCityPickerState extends State<_XtmCityPickerContent> {
       _selectedCountryIndex = 0;
       _countryScrollController.jumpToItem(_selectedCountryIndex);
     });
+  }
+
+  void _onConfirm() {
+    ProvinceModel province = ProvinceModel(
+      provinceID: provinces[_selectedProvinceIndex].provinceID,
+      provinceName: provinces[_selectedProvinceIndex].provinceName,
+    );
+    CityModel city = CityModel(
+      cityID: cities.isNotEmpty ? cities[_selectedCityIndex].cityID : 0,
+      cityName: cities.isNotEmpty ? cities[_selectedCityIndex].cityName : '',
+    );
+    CountryModel country = CountryModel(
+      countryID: countries.isNotEmpty ? countries[_selectedCountryIndex].countryID : 0,
+      countryName: countries.isNotEmpty ? countries[_selectedCountryIndex].countryName : '',
+    );
+    int _areaCode;
+    if (country.countryID > 0) {
+      _areaCode = country.countryID;
+    } else if (city.cityID > 0) {
+      _areaCode = city.cityID;
+    } else {
+      _areaCode = province.provinceID;
+    }
+    widget.onSelected(province, city, country, _areaCode);
+    Navigator.of(context).pop();
   }
 }

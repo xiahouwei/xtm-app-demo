@@ -375,22 +375,23 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void loginAction() async {
-    if (!_agreementSelected) {
-      showUserAgreementDialog();
-      return;
-    }
-    if (!_formKey.currentState.validate()) {
-      return;
-    }
-    xtmGlobalStore.auth.setToken(HTTPConfig.baseToken);
+    changeRootPageAndLoginStatus();
+    // if (!_agreementSelected) {
+    //   showUserAgreementDialog();
+    //   return;
+    // }
+    // if (!_formKey.currentState.validate()) {
+    //   return;
+    // }
+    // xtmGlobalStore.auth.setToken(HTTPConfig.baseToken);
 
-    Map<String, dynamic> loginParam = {};
-    loginParam['mobile'] = _mobileController.text.trim();
-    loginParam['password'] = _pwdController.text.trim();
-    loginParam['messageCode'] = _smsCodeController.text.trim();
-    loginParam['loginTypeCode'] = _loginType;
-    loginParam['hardwareInformation'] = '';
-    xtmApi.auth.loginByMobile(params: loginParam).then((res) => handleToken(res));
+    // Map<String, dynamic> loginParam = {};
+    // loginParam['mobile'] = _mobileController.text.trim();
+    // loginParam['password'] = _pwdController.text.trim();
+    // loginParam['messageCode'] = _smsCodeController.text.trim();
+    // loginParam['loginTypeCode'] = _loginType;
+    // loginParam['hardwareInformation'] = '';
+    // xtmApi.auth.loginByMobile(params: loginParam).then((res) => handleToken(res));
   }
 
   void handleToken(Map<String, dynamic> res) async {

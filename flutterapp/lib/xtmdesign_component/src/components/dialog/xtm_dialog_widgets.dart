@@ -11,6 +11,7 @@ class CustomDialogWidget extends StatelessWidget {
   final Color leftBtnTitleColor;
   final Color rightBtnTitleColor;
   final bool showCloseIcon;
+  final bool showDialogButton;
   final XtmDialogButtonStyle buttonStyle;
   final XtmDialogType dialogType;
   final Widget customContent;
@@ -28,6 +29,7 @@ class CustomDialogWidget extends StatelessWidget {
     this.rightBtnTitleColor,
     this.customContent,
     this.showCloseIcon,
+    this.showDialogButton = true,
     this.dialogType,
     this.buttonStyle,
     this.formKey,
@@ -54,7 +56,7 @@ class CustomDialogWidget extends StatelessWidget {
                 showCloseIcon: showCloseIcon,
               ),
               _contentWidget(message, customContent),
-              _horizontalButtons(context, dialogType, formKey),
+              showDialogButton ? _horizontalButtons(context, dialogType, formKey) : SizedBox(),
             ],
           ),
         ),

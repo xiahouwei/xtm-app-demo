@@ -21,6 +21,9 @@ class XtmAppBar extends StatelessWidget implements PreferredSizeWidget {
   /// 标题
   final String title;
 
+  /// 标题颜色
+  final Color titleColor;
+
   /// 左侧自定义组件
   final Widget leftWidget;
 
@@ -30,15 +33,20 @@ class XtmAppBar extends StatelessWidget implements PreferredSizeWidget {
   /// 背景色
   final Color backgroundColor;
 
+  /// 阴影
+  final double elevation;
+
   /// pop事件携带的参数
   final Map<String, dynamic> popParams;
 
   XtmAppBar({
     Key key,
     this.title,
+    this.titleColor,
     this.leftWidget,
     this.rightActions,
     this.backgroundColor,
+    this.elevation,
     this.popParams,
   }) : super(key: key);
 
@@ -48,7 +56,7 @@ class XtmAppBar extends StatelessWidget implements PreferredSizeWidget {
       centerTitle: true,
       title: Text(
         title,
-        style: TextStyle(fontSize: 18, color: xtmDesignConfig.mainTextColor),
+        style: TextStyle(fontSize: 18, color: titleColor ?? xtmDesignConfig.mainTextColor),
       ),
       backgroundColor: backgroundColor ?? Colors.white,
       leading: leftWidget ??
@@ -62,7 +70,7 @@ class XtmAppBar extends StatelessWidget implements PreferredSizeWidget {
             ),
           ),
       actions: rightActions,
-      elevation: 1.0,
+      elevation: elevation ?? 1.0,
       iconTheme: IconThemeData(color: xtmDesignConfig.mainTextColor),
     );
   }

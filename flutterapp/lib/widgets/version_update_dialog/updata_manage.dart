@@ -25,7 +25,7 @@ class UpDataManage {
       {DownloadCallback callback}) async {
     // 获取APP安装路径
     if (Platform.isIOS) {
-      String url = 'itms-apps://itunes.apple.com/app/id6743927856';
+      String url = 'itms-apps://itunes.apple.com/app/id6758364347';
       if (await canLaunchUrlString(url)) {
         await launchUrlString(url);
       } else {

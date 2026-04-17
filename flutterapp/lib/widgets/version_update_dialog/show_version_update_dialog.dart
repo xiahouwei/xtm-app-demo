@@ -3,8 +3,8 @@ import 'dart:io';
 import 'package:flutter_proj/config/api_interface_config/index.dart';
 import 'package:flutter_proj/network/http_config.dart';
 import 'package:flutter_proj/utils/navigator_provider_utils.dart';
-import 'package:flutter_proj/widgets/versionUpdateDialog/updata_manage.dart';
-import 'package:flutter_proj/widgets/versionUpdateDialog/version_update_dialog.dart';
+import 'package:flutter_proj/widgets/version_update_dialog/updata_manage.dart';
+import 'package:flutter_proj/widgets/version_update_dialog/version_update_dialog.dart';
 import 'package:flutter_proj/xtmdesign_component/src/components/toast/xtm_toast.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 

@@ -3,7 +3,6 @@ import 'dart:io';
 
 import 'package:dio/adapter.dart';
 import 'package:dio/dio.dart';
-import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_proj/network/http_config.dart';
 import 'package:flutter_proj/network/http_response_code.dart';
@@ -15,8 +14,9 @@ import 'package:flutter_proj/store/global_store.dart';
 import 'package:flutter_proj/utils/navigator_provider_utils.dart';
 import 'package:flutter_proj/widgets/show_invalidate_token_dialog.dart';
 import 'package:flutter_proj/widgets/tms_loading.dart';
-import 'package:flutter_proj/widgets/versionUpdateDialog/show_version_update_dialog.dart';
+import 'package:flutter_proj/widgets/version_update_dialog/show_version_update_dialog.dart';
 import 'package:flutter_proj/xtmdesign_component/xtm_design.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 enum RequestMethodEnum {
   POST,
@@ -131,7 +131,7 @@ class HTTP {
     String trace = traceCounter.createTraceId(mobile);
     String terminal = HTTPConfig.terminal;
     return {
-      'Authorization': token,
+      'token': token,
       'platform': platform,
       'version': apiVersion,
       'terminal': terminal,
@@ -153,6 +153,7 @@ class HTTP {
     bool showErrorDialog = true,
     ResponseType responseType,
     ResponseReturnLevel responseReturnLevel = ResponseReturnLevel.DATA,
+    String requestBaseUrl,
   }) async {
     CancelFunc loadingDismissFunc;
     if (showLoading) {
@@ -160,7 +161,11 @@ class HTTP {
     }
 
     String baseUrl = '';
-    if (HTTPConfig.appType == HTTP_REQUEST_APP_TYPE.TMS &&
+    if (requestBaseUrl != null) {
+      baseUrl = requestBaseUrl.contains('http')
+          ? requestBaseUrl
+          : '${HTTPConfig.serverDomain}${requestBaseUrl}';
+    } else if (HTTPConfig.appType == HTTP_REQUEST_APP_TYPE.TMS &&
         contentType == RequestContentType.APPLICATION_FORM) {
       baseUrl = TmsHttpRequest.getBaseUrl();
     } else {
@@ -277,7 +282,7 @@ class HTTP {
           onSuccess(content);
         }
       }
-    } else if (desc == 'App token失效' || desc == '您的登录已过期，请重新登录') {
+    } else if (desc == 'App token失效' || desc == 'App token 失效' || desc == '您的登录已过期，请重新登录') {
       ///兼容code=-1不唯一情况，改为message判断 token失效
       showTokenInvalidateDialog();
     } else if (code == HttpCodeConstants.NEED_UPDATE) {

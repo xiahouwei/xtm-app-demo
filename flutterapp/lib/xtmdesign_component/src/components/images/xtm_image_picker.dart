@@ -2,9 +2,9 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_proj/device/index.dart';
 import 'package:flutter_proj/xtmdesign_component/src/components/images/xtm_net_image.dart';
 import 'package:flutter_proj/xtmdesign_component/src/xtm_design_config.dart';
-import 'package:flutter_proj/device/index.dart';
 
 /// [XtmImagePicker] 图片选择器
 ///
@@ -39,23 +39,25 @@ class XtmImagePicker extends StatefulWidget {
   final bool isRequired;
   final String imgDesc;
   final String placeholderPath;
+  final String errorImgPath;
   final bool onlyCamera;
-  final Widget Function(BuildContext, Object, StackTrace) errorBuilder;
   final ValueChanged<String> onImageSelected;
+  final bool disabled;
 
   XtmImagePicker({
     Key key,
     this.imgUrl,
     this.token,
-    this.fit = BoxFit.fitWidth,
+    this.fit = BoxFit.contain,
     this.width = 80,
     this.height = 60,
     this.isRequired = false,
-    this.imgDesc = '请上传图片',
+    this.imgDesc,
     this.placeholderPath,
-    this.errorBuilder,
+    this.errorImgPath,
     this.onImageSelected,
     this.onlyCamera = false,
+    this.disabled = false,
   }) : super(key: key);
 
   @override
@@ -85,23 +87,32 @@ class _XtmImagePickerState extends State<XtmImagePicker> {
                         style: TextStyle(color: Colors.red)),
                   ),
                   SizedBox(width: 5),
-                  Text(
-                    widget.imgDesc,
-                    style: TextStyle(
-                      fontSize: 13,
-                      color: xtmDesignConfig.mainTextColor,
-                    ),
-                  ),
+                  widget.imgDesc == null
+                      ? SizedBox()
+                      : ConstrainedBox(
+                          constraints: BoxConstraints(maxWidth: widget.width - 20),
+                          child: Text(
+                            widget.imgDesc,
+                            softWrap: true,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: 13,
+                              color: xtmDesignConfig.mainTextColor,
+                            ),
+                          ),
+                        ),
                 ],
               ),
             ),
           ],
         ),
       ),
-      onTap: () async {
-        FocusScope.of(context).unfocus();
-        widget.onlyCamera ? openCamera() : _selectResource();
-      },
+      onTap: widget.disabled
+          ? null
+          : () async {
+              FocusScope.of(context).unfocus();
+              widget.onlyCamera ? openCamera() : _selectResource();
+            },
     );
   }
 
@@ -114,22 +125,29 @@ class _XtmImagePickerState extends State<XtmImagePicker> {
           width: widget.width,
           height: widget.height,
           placeholderPath: widget.placeholderPath,
-          errorBuilder: widget.errorBuilder);
+          errorImgPath: widget.errorImgPath);
     }
-    return Image.file(
-      File(imgPath),
+    if (imgPath.isNotEmpty) {
+      return Image.file(
+        File(imgPath),
+        fit: widget.fit,
+        width: widget.width,
+        height: widget.height,
+        errorBuilder: (context, error, stackTrace) {
+          return Image.asset(
+            widget.errorImgPath ?? 'lib/xtmdesign_component/assets/images/img_error.png',
+            width: widget.width,
+            height: widget.height,
+            fit: BoxFit.fill,
+          );
+        },
+      );
+    }
+    return Image.asset(
+      widget.placeholderPath ?? 'lib/xtmdesign_component/assets/images/img_placeholder.png',
       fit: widget.fit,
       width: widget.width,
       height: widget.height,
-      errorBuilder: widget.errorBuilder ??
-          (context, error, stackTrace) {
-            return Image.asset(
-              widget.placeholderPath ?? 'lib/xtmdesign_component/assets/images/img_placeholder.png',
-              width: widget.width,
-              height: widget.height,
-              fit: BoxFit.fill,
-            );
-          },
     );
   }
 

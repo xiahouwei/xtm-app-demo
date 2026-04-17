@@ -1,4 +1,4 @@
-package com.tjxtm.tmstransport;
+package com.tjxtm.lpdriver;
 
 import android.content.Intent;
 import android.net.Uri;

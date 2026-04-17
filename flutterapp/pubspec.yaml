@@ -1,10 +1,9 @@
 name: flutter_proj
-description: 运输公司端
+description: 9MS司机端
 
 publish_to: 'none'
 
-# version: 1.0.0   #release
-version: 3.10.2   #dev
+version: 3.10.6   #release
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -66,6 +65,7 @@ dependencies:
   flutter_ume_kit_dio: 1.0.1+2
   flutter_ume_kit_console: 1.0.0
   flutter_ume_kit_perf: 1.0.0
+  
 
 dev_dependencies:
   pretty_dio_logger: 1.2.0-beta-1
@@ -76,6 +76,7 @@ flutter:
   uses-material-design: true
 
   assets:
+    - assets/icons/bottom_bar/
     - assets/images/tabbar/
     - assets/images/mine/
     - assets/images/login/

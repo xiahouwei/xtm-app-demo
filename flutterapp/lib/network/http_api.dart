@@ -5,7 +5,7 @@ import 'package:flutter_proj/utils/async_utils.dart';
 
 class HttpOptions {
   String path;
-  Map params;
+  dynamic params;
   Map<String, dynamic> queryParameters;
   String contentType;
   int connectTimeout;
@@ -15,6 +15,7 @@ class HttpOptions {
   bool showLoading;
   bool showErrorDialog;
   ResponseReturnLevel responseReturnLevel;
+  String requestBaseUrl;
 
   HttpOptions({
     this.path = '',
@@ -28,6 +29,7 @@ class HttpOptions {
     this.showLoading = true,
     this.showErrorDialog = true,
     this.responseReturnLevel = ResponseReturnLevel.DATA,
+    this.requestBaseUrl,
   });
 }
 
@@ -48,6 +50,7 @@ class HttpApi {
         showLoading: httpOptions.showLoading,
         showErrorDialog: httpOptions.showErrorDialog,
         responseReturnLevel: httpOptions.responseReturnLevel,
+        requestBaseUrl: httpOptions.requestBaseUrl,
         onSuccess: (data) {
           if (httpOptions.onSuccess != null) {
             dynamic res = httpOptions.onSuccess(data);

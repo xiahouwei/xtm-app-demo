@@ -9,31 +9,34 @@ class DisplayImage extends StatelessWidget {
   final String imgUrl;
   final double width;
   final double height;
+  final String imgDesc;
   final BoxFit fit;
   final ImageTypeEnum placeholderType;
-  final Widget Function(BuildContext, Object, StackTrace) errorBuilder;
+  final String errorImgPath;
 
   DisplayImage({
     Key key,
     this.imgId,
     this.imgUrl,
-    this.width,
-    this.height,
-    this.fit = BoxFit.fitWidth,
+    this.width = 80,
+    this.height = 60,
+    this.imgDesc,
+    this.fit = BoxFit.contain,
     this.placeholderType,
-    this.errorBuilder,
+    this.errorImgPath,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return XtmNetImage.network(
-      imgUrl: imgUrl ?? (imgId != null && imgId.isNotEmpty) ? _getImageSrcById(imgId) : '',
+      imgUrl: imgUrl ?? ((imgId != null && imgId.isNotEmpty) ? _getImageSrcById(imgId) : ''),
       token: xtmGlobalStore.auth.token ?? '',
       width: width,
       height: height,
+      imgDesc: imgDesc,
       fit: fit,
       placeholderPath: ImageConstants.getPlaceholderImagePath(placeholderType),
-      errorBuilder: errorBuilder,
+      errorImgPath: errorImgPath,
     );
   }
 
@@ -41,7 +44,7 @@ class DisplayImage extends StatelessWidget {
   static String _getImageSrcById(String id) {
     String imageSrc = '';
     if (id != null && id.isNotEmpty) {
-      imageSrc = HTTPConfig.serverDomain + '/api/file/downLoad/$id';
+      imageSrc = HTTPConfig.serverDomain + '/apiPlat/tms-file/downLoad/$id';
     }
     return imageSrc;
   }

@@ -39,7 +39,7 @@ def emulatorAbiFilters = dartDefine['DART_DEFINE_APP_ENV'] == 'release' ? [] : [
 android {
     compileSdkVersion 33
     defaultConfig {
-        applicationId "com.tjxtm.tmstransport"
+        applicationId "com.tjxtm.lpdriver"
         minSdkVersion 21
         targetSdkVersion 33
         versionCode flutterVersionCode.toInteger()

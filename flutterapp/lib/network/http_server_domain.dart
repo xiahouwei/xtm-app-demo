@@ -8,7 +8,7 @@ class DomainModel {
   DomainModel(this.platformName, this.envDomain);
 }
 
-enum ServerDomainType { RELEASE, PRE, DEV, SIT3 }
+enum ServerDomainType { RELEASE, PRE, DEV, SIT3, QA }
 
 class HttpServerDomain {
   static final List<DomainModel> _releaseEnv = [
@@ -26,6 +26,10 @@ class HttpServerDomain {
   static final List<DomainModel> _sit3Env = [
     DomainModel('sit3', 'https://sit3.tjzwzn.cn/tms'),
   ];
+  static final List<DomainModel> _qaEnv = [
+    DomainModel('qa', 'https://qa.tjzwzn.cn/tms'),
+  ];
+
   static List<DomainModel> getServerDomainList() {
     switch (HTTPConfig.serverDomainType) {
       case ServerDomainType.RELEASE:
@@ -36,6 +40,8 @@ class HttpServerDomain {
         return _devEnv;
       case ServerDomainType.SIT3:
         return _sit3Env;
+      case ServerDomainType.QA:
+        return _qaEnv;
       default:
         return _devEnv;
     }

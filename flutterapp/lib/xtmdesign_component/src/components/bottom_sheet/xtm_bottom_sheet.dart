@@ -101,6 +101,11 @@ class _XtmPickerBottomSheetState extends State<_XtmBottomPickerContent> {
   @override
   void initState() {
     super.initState();
+
+    /// 初始化选中项
+    if (widget.selectItem != null && widget.selectItem.isNotEmpty) {
+      _index = widget.data.indexOf(widget.selectItem);
+    }
   }
 
   @override

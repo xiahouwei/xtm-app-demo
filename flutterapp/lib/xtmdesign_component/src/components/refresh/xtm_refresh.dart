@@ -29,7 +29,7 @@ class XtmRefresh {
     /// 刷新控制器
     @required RefreshController controller,
 
-    /// ListView, 子 view 必须是 ListView
+    /// ListView, 子 view 可以是 ListView, GridView, CustomScrollView
     @required Widget listView,
 
     /// 列表数量
