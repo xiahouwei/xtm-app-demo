@@ -1,5 +1,10 @@
+import 'dart:io';
+
+import 'package:flutter_proj/constants/common_constant.dart';
 import 'package:flutter_proj/network/http_api.dart';
 import 'package:flutter_proj/network/http_manager.dart';
+import 'package:flutter_proj/network/tms_http_request.dart';
+import 'package:flutter_proj/store/global_store.dart';
 
 /// 登录相关接口
 class AuthApi {
@@ -17,6 +22,29 @@ class AuthApi {
         params: params,
       ));
 
+  /// 查询是否展示图片验证码
+  Future<T> showPicCapture<T>({String mobile}) async => xtmHttpApi.post(HttpOptions(
+        path: 'registered',
+        contentType: RequestContentType.APPLICATION_FORM,
+        responseReturnLevel: ResponseReturnLevel.FULL,
+        params: {'mobile': mobile},
+      ));
+
+  /// 获取验证码
+  Future<T> getSmsCode<T>({Map<String, dynamic> params}) async => xtmHttpApi.post(HttpOptions(
+        path: 'appCaptcha',
+        contentType: RequestContentType.APPLICATION_FORM,
+        responseReturnLevel: ResponseReturnLevel.FULL,
+        params: params,
+      ));
+
+  /// 初始化密码
+  Future<T> setPassword<T>({params}) async => xtmHttpApi.put(HttpOptions(
+        requestBaseUrl: TmsHttpRequest.TMS_SERVER_PATH,
+        path: 'initLoginPassword',
+        params: params,
+      ));
+
   /// 版本更新获取下载地址
   Future<T> versionUpdate<T>({params}) async => xtmHttpApi.post(HttpOptions(
         path: 'firmwareUpdate',
@@ -25,10 +53,12 @@ class AuthApi {
       ));
 
   /// 获取用户信息
-  Future<T> getUserinfoAPi<T>({params}) async => xtmHttpApi.post(HttpOptions(
+  Future<T> getUserinfoAPi<T>({Map<String, dynamic> params, bool showLoading = true}) async =>
+      xtmHttpApi.post(HttpOptions(
         path: 'getNoLoginUserInfo',
         contentType: RequestContentType.APPLICATION_FORM,
         params: params,
+        showLoading: showLoading,
       ));
 
   /// 登录接口 token
@@ -41,12 +71,6 @@ class AuthApi {
   Future<T> isLoginPwdExists<T>({String userId}) async =>
       xtmHttpApi.get(HttpOptions(path: 'user/user/pwd/exists/$userId'));
 
-  /// 设置密码
-  Future<T> setPassword<T>({params}) async => xtmHttpApi.post(HttpOptions(
-        path: 'user/user/pwd',
-        params: params,
-      ));
-
   /// 注册获取手机验证码
   Future<T> getSmsCodeByMobileWithRegiste<T>({String mobile}) async =>
       xtmHttpApi.get(HttpOptions(path: 'validata/smsCode/${mobile}/11'));
@@ -55,5 +79,27 @@ class AuthApi {
   Future<T> registerUser<T>({params}) async => xtmHttpApi.post(HttpOptions(
         path: 'app/sign-up/driver',
         params: params,
+      ));
+
+  /// 个推绑定cid
+  Future<T> bindClientId<T>() async => xtmHttpApi.post(HttpOptions(
+        path: 'msg/base/bindCid',
+        params: {
+          'clientId': xtmGlobalStore.auth.clientId,
+          'userId': xtmGlobalStore.auth.userInfo.userID,
+          'type': Platform.isIOS ? 1 : 2,
+          'appChannel': AppChannel.appChannelName
+        },
+      ));
+
+  /// 个推解绑cid
+  Future<T> unbindClientId<T>() async => xtmHttpApi.post(HttpOptions(
+        path: 'msg/base/unBindCid',
+        params: {
+          'clientId': xtmGlobalStore.auth.clientId,
+          'userId': xtmGlobalStore.auth.userInfo.userID,
+          'type': Platform.isIOS ? 1 : 2,
+          'appChannel': AppChannel.appChannelName
+        },
       ));
 }

@@ -16,7 +16,7 @@ class HttpServerDomain {
   ];
 
   static final List<DomainModel> _preEnv = [
-    DomainModel('河北纵横集团丰南钢铁有限公司', 'https://pre-9ms-zt.tjzwzn.cn'),
+    DomainModel('pre', 'https://pre.tjzwzn.cn/tms'),
   ];
 
   static final List<DomainModel> _devEnv = [

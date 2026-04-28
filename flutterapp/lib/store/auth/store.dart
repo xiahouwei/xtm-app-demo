@@ -14,6 +14,8 @@ class AuthStoreConstants {
   static const String KEY_PASSWORD = "password";
   static const String KEY_SHOW_SECRET = "showSecretDialog";
   static const String KEY_PLATFORM_NAME = "platformName";
+  static const String KEY_CLIENT_ID = "clientId";
+  static const String KEY_LAST_CHAT_MESSAGE_DATETIME = "lastChatMessageDateTime";
 }
 
 class AuthGlobalStore extends GlobalStoreBase<AuthGlobalState> {
@@ -32,6 +34,7 @@ class AuthGlobalStore extends GlobalStoreBase<AuthGlobalState> {
     state.password = await LocalStorage.get(AuthStoreConstants.KEY_PASSWORD, '');
     state.showSecretDialog = await LocalStorage.getBool(AuthStoreConstants.KEY_SHOW_SECRET, true);
     state.platformName = await LocalStorage.get(AuthStoreConstants.KEY_PLATFORM_NAME, '');
+    state.clientId = await LocalStorage.get(AuthStoreConstants.KEY_CLIENT_ID, '');
   }
 
   Future<UserInfoModel> getUserInfoByLocalStorage() async {
@@ -96,5 +99,12 @@ class AuthGlobalStore extends GlobalStoreBase<AuthGlobalState> {
   void setPlatformName(String domain) {
     state.platformName = domain;
     LocalStorage.set(AuthStoreConstants.KEY_PLATFORM_NAME, domain);
+  }
+
+  String get clientId => state.clientId;
+
+  void setClientId(String clientId) {
+    state.clientId = clientId;
+    LocalStorage.set(AuthStoreConstants.KEY_CLIENT_ID, clientId);
   }
 }

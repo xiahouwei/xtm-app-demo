@@ -33,29 +33,32 @@ class XtmToast {
       onlyOne: true,
       toastBuilder: (cancelFunc) {
         return Center(
-          child: Container(
-            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-            decoration: BoxDecoration(
-              color: _createBgColor(toastType),
-              borderRadius: BorderRadius.circular(5),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                _buildIcon(toastType),
-                SizedBox(width: 5),
-                ConstrainedBox(
-                  constraints: BoxConstraints(
-                    maxWidth: MediaQueryData.fromWindow(window).size.width * 0.7,
+          child: Card(
+            elevation: 2,
+            child: Container(
+              padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+              decoration: BoxDecoration(
+                color: _createBgColor(toastType),
+                borderRadius: BorderRadius.circular(5),
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  _buildIcon(toastType),
+                  SizedBox(width: 5),
+                  ConstrainedBox(
+                    constraints: BoxConstraints(
+                      maxWidth: MediaQueryData.fromWindow(window).size.width * 0.7,
+                    ),
+                    child: Text(
+                      message,
+                      softWrap: true,
+                      style: TextStyle(color: xtmDesignConfig.mainTextColor, fontSize: 16),
+                    ),
                   ),
-                  child: Text(
-                    message,
-                    softWrap: true,
-                    style: TextStyle(color: xtmDesignConfig.mainTextColor, fontSize: 16),
-                  ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         );

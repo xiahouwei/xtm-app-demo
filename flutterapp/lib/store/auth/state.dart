@@ -25,6 +25,9 @@ class AuthGlobalState {
   /// 当前基地
   String platformName;
 
+  /// 个推客户端id
+  String clientId;
+
   AuthGlobalState({
     this.isLogin,
     this.token,
@@ -34,5 +37,6 @@ class AuthGlobalState {
     this.password,
     this.showSecretDialog,
     this.platformName,
+    this.clientId,
   });
 }

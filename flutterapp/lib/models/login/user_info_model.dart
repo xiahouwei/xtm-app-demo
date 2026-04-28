@@ -3,59 +3,112 @@ class UserInfoModel {
   int auditStatus;
 
   ///用户Id
-  String id;
-
   String userID;
 
-  ///身份证号
-  String identityCard;
+  /// 是否初始密码
+  bool initPassword;
 
   ///手机号
   String mobile;
 
   ///姓名
-  String name;
   String userName;
 
-  ///公司ID
-  String organId;
+  /// 用户头像
+  String portraitPhotoUrl;
 
-  ///公司名
-  String organName;
+  /// 身份证号
+  String idNumber;
+
+  /// 车辆经营人 1是 0否
+  int isVehicleOperator;
+
+  /// 车辆经营人id
+  int vehicleOperatorId;
+
+  ///公司信息
+  CompanyInfo companyInfo;
 
   UserInfoModel({
     this.auditStatus,
-    this.id,
     this.userID,
-    this.identityCard,
+    this.initPassword,
     this.mobile,
-    this.name,
     this.userName,
-    this.organId,
-    this.organName,
+    this.portraitPhotoUrl,
+    this.idNumber,
+    this.companyInfo,
+    this.isVehicleOperator,
+    this.vehicleOperatorId,
   });
 
   factory UserInfoModel.fromJson(Map<String, dynamic> json) => UserInfoModel(
-        auditStatus: json["auditStatus"],
-        id: json["id"],
-        userID: json["userID"],
-        identityCard: json["identityCard"],
-        mobile: json["mobile"],
-        name: json["name"],
-        userName: json["userName"],
-        organId: json["organId"],
-        organName: json["organName"],
-      );
+      auditStatus: json["auditStatus"],
+      userID: json["userID"],
+      initPassword: json["initPassword"],
+      mobile: json["mobile"],
+      userName: json["userName"],
+      portraitPhotoUrl: json['portraitPhotoUrl'],
+      idNumber: json['idNumber'],
+      companyInfo: json["companyInfo"] != null ? CompanyInfo.fromJson(json["companyInfo"]) : null,
+      isVehicleOperator: json["isVehicleOperator"],
+      vehicleOperatorId: json["vehicleOperatorId"]);
 
   Map<String, dynamic> toJson() => {
         "auditStatus": auditStatus,
-        "id": id,
         "userID": userID,
-        "identityCard": identityCard,
+        "initPassword": initPassword,
         "mobile": mobile,
-        "name": name,
         "userName": userName,
-        "organId": organId,
-        "organName": organName,
+        "portraitPhotoUrl": portraitPhotoUrl,
+        "idNumber": idNumber,
+        "companyInfo": companyInfo,
+        "isVehicleOperator": isVehicleOperator,
+        "vehicleOperatorId": vehicleOperatorId,
+      };
+}
+
+class CompanyInfo {
+  ///公司id
+  String companyID;
+
+  ///公司名称
+  String companyName;
+
+  /// 角色类型
+  List organTypeIds;
+  String companyAgentId;
+
+  /// 企业代理编码
+  String companyAgentCode;
+
+  /// 认证状态 0未认证 1已认证
+  int certificationStatus;
+
+  CompanyInfo({
+    this.companyID,
+    this.companyName,
+    this.organTypeIds,
+    this.companyAgentId,
+    this.companyAgentCode,
+    this.certificationStatus,
+  });
+
+  factory CompanyInfo.fromJson(Map<String, dynamic> json) => CompanyInfo(
+        companyID: json["companyID"],
+        companyName: json["companyName"],
+        organTypeIds: json['organTypeIds'],
+        companyAgentId: json['companyAgentId'],
+        companyAgentCode: json['companyAgentCode'],
+        certificationStatus: json['certificationStatus'],
+      );
+
+  Map<String, dynamic> toJson() => {
+        "companyID": companyID,
+        "companyName": companyName,
+        "organTypeIds": organTypeIds,
+        "companyAgentId": companyAgentId,
+        "companyAgentCode": companyAgentCode,
+        "certificationStatus": certificationStatus,
       };
 }

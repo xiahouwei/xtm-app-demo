@@ -1,9 +1,10 @@
 name: flutter_proj
-description: 9MS司机端
+description: XTM-APP-模版
 
 publish_to: 'none'
 
-version: 3.10.6   #release
+# version: 1.0.0   #release
+version: 3.10.6   #dev
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -15,6 +16,9 @@ dependencies:
     sdk: flutter
   webview_flutter:
     path: plugins/webview_flutter
+  flutter_local_notifications:
+    path: plugins/flutter_local_notifications
+
   event_bus: 2.0.1
   # 状态管理
   provider: 6.0.1
@@ -34,6 +38,7 @@ dependencies:
   install_plugin_v2: 1.0.0
   #高德地图
   amap_flutter_map: 3.0.0
+  amap_flutter_location: 2.0.0
   # 高精度数字处理
   decimal: 1.5.0
   # 加载loading
@@ -59,13 +64,24 @@ dependencies:
   file_picker: 4.6.1
   # 录音功能
   flutter_plugin_record_plus: 0.0.15
+  # 图片预览手势插件
+  photo_view: 0.15.0
+  # pdf
+  flutter_pdfview: 1.2.1
+  # Html
+  flutter_widget_from_html_core: 0.8.5+1
+  # 个推
+  getuiflut: 0.2.30
+  # 视频压缩
+  video_compress: 3.1.0
+  # 生成二维码
+  qr_flutter: 4.0.0
 
   # 调试工具
   flutter_ume: 1.1.0
   flutter_ume_kit_dio: 1.0.1+2
   flutter_ume_kit_console: 1.0.0
   flutter_ume_kit_perf: 1.0.0
-  
 
 dev_dependencies:
   pretty_dio_logger: 1.2.0-beta-1
@@ -76,11 +92,17 @@ flutter:
   uses-material-design: true
 
   assets:
+    # 模板资源
+    - assets/icons/
     - assets/icons/bottom_bar/
     - assets/images/tabbar/
-    - assets/images/mine/
-    - assets/images/login/
     - assets/images/widgets/
     - assets/images/placeholder/
     - assets/images/version_update/
     - lib/xtmdesign_component/assets/images/
+    # 业务资源
+    - assets/images/home/
+    - assets/images/message/
+    - assets/images/mine/
+    - assets/images/login/
+

@@ -9,10 +9,10 @@ class ImageApi {
     Map<String, dynamic> params = {};
     params['file'] = MultipartFile.fromFileSync(imagePath);
     params['businessSource'] = businessSource;
-    params['agentCode'] = 'app';
+    params['agentCode'] = 'zhgt';
     return xtmHttpApi.post(
       HttpOptions(
-        path: 'file/files/upload',
+        path: 'tms-file/files/upload',
         contentType: RequestContentType.FORM_DATA,
         params: params,
       ),
@@ -32,7 +32,7 @@ class ImageApi {
     };
     return xtmHttpApi.post(
       HttpOptions(
-        path: 'file/ocr/imageOcr',
+        path: 'tms-file/ocr/imageOcr',
         contentType: RequestContentType.FORM_DATA,
         params: params,
       ),

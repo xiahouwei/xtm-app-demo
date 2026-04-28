@@ -1,9 +1,11 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_proj/theme/xtm_color.dart';
 import 'package:flutter_proj/xtmdesign_component/src/components/app_bar/xtm_app_bar.dart';
 import 'package:webview_flutter/webview_flutter.dart';
-import 'package:flutter_proj/theme/xtm_color.dart';
+
+import './web_view_js_channel_manager.dart';
 
 class WebViewJsCallBackConstants {
   /// web页面提供后退功能,根据返回退出webview
@@ -30,6 +32,9 @@ class WebViewPage extends StatefulWidget {
   /// 是否显示网页加载进度条
   final bool showProgress;
 
+  /// 给调用页回调数据
+  final Function(Map<String, dynamic> data) onCallBack;
+
   WebViewPage({
     @required this.urlString,
     this.titleStr,
@@ -37,6 +42,7 @@ class WebViewPage extends StatefulWidget {
     this.clearCache = true,
     this.webviewPopBySelf = false,
     this.showProgress = false,
+    this.onCallBack,
   });
 
   @override
@@ -49,6 +55,8 @@ class _WebViewPageState extends State<WebViewPage> {
   WebViewController _controller;
   double progressValue = 0.0;
   bool isShowProgress = false;
+
+  WebViewJsChannelManager webViewJsChannelManager = WebViewJsChannelManager();
 
   @override
   void initState() {
@@ -130,11 +138,14 @@ class _WebViewPageState extends State<WebViewPage> {
       initialUrl: widget.urlString,
       debuggingEnabled: true,
       javascriptMode: JavascriptMode.unrestricted,
+      javascriptChannels: webViewJsChannelManager.buildJavascriptChannels(),
       onWebViewCreated: (con) {
         _controller = con;
         if (widget.clearCache) {
           _controller.clearCache();
         }
+        webViewJsChannelManager.setControl(_controller);
+        webViewJsChannelManager.setCallBack(context, widget.onCallBack);
       },
       navigationDelegate: (NavigationRequest request) {
         return NavigationDecision.navigate;

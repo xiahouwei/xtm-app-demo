@@ -1,6 +1,5 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_proj/theme/xtm_color.dart';
 import 'package:flutter_proj/common/h5_page/h5_page_manage.dart';
 
 class UserUseAgreementWidget extends StatefulWidget {
@@ -23,7 +22,7 @@ class _UserUseAgreementWidgetState extends State<UserUseAgreementWidget> {
     super.initState();
     _privateProtocolRecognizer = TapGestureRecognizer()
       ..onTap = () {
-        H5PageManange.navigator2PrivacyAgreementPage();
+        H5PageManager.navigator2PrivacyAgreementPage();
       };
     _isCheckAgreement = widget.isSelected;
   }
@@ -39,9 +38,10 @@ class _UserUseAgreementWidgetState extends State<UserUseAgreementWidget> {
     return Container(
         width: MediaQuery.of(context).size.width - 80,
         child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             dotBtn(),
+            Text('我已阅读并同意', style: TextStyle(color: Colors.white, fontSize: 13)),
             Expanded(child: displayProtocol()),
           ],
         ));
@@ -51,12 +51,10 @@ class _UserUseAgreementWidgetState extends State<UserUseAgreementWidget> {
     return GestureDetector(
       child: Container(
         color: Colors.transparent,
-        padding: EdgeInsets.fromLTRB(12, 4, 6, 12),
-        child: Image.asset(
-          'assets/images/login/${_isCheckAgreement ? 'login_check_sel.png' : 'login_check_nor.png'}',
-          width: 13,
-          height: 13,
-        ),
+        padding: EdgeInsets.only(top: 12, bottom: 10, left: 10, right: 10),
+        child: _isCheckAgreement
+            ? Icon(Icons.check_circle, color: Color(0xFF21CAFC), size: 16)
+            : Icon(Icons.radio_button_unchecked, color: Colors.white, size: 16),
       ),
       onTap: () {
         setState(() {
@@ -71,23 +69,17 @@ class _UserUseAgreementWidgetState extends State<UserUseAgreementWidget> {
 
   Widget displayProtocol() {
     return RichText(
-      text: TextSpan(style: TextStyle(height: 1.5, fontSize: 12), children: [
-        factoryTextSpan(textStr: '我已阅读并同意'),
-        TextSpan(
-          text: '《隐私政策》',
-          style: TextStyle(color: XtmColor.themeColor, fontSize: 12),
-          recognizer: _privateProtocolRecognizer,
-        ),
-      ]),
+      text: TextSpan(
+        style: TextStyle(height: 1.5, fontSize: 13),
+        children: [
+          TextSpan(
+            text: '《隐私政策》',
+            style: TextStyle(color: Color(0xFF21CAFC), fontSize: 13),
+            recognizer: _privateProtocolRecognizer,
+          ),
+        ],
+      ),
     );
-  }
-
-  TextSpan factoryTextSpan({@required String textStr}) {
-    return TextSpan(
-        text: textStr,
-        style: TextStyle(
-            color: _isCheckAgreement ? Colors.black : Color.fromRGBO(124, 139, 160, 1.0),
-            fontSize: 12));
   }
 
   @override

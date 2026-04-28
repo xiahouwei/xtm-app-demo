@@ -33,7 +33,7 @@ class ShowUserAgreementDialog {
               style: TextStyle(color: XtmColor.themeColor, fontSize: 14),
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
-                  H5PageManange.navigator2PrivacyAgreementPage();
+                  H5PageManager.navigator2PrivacyAgreementPage();
                 },
             ),
           ],

@@ -23,6 +23,7 @@ class SystemGlobalStore extends GlobalStoreBase<SystemGlobalState> {
     state.fontScale = await LocalStorage.getDouble(
         SystemStoreConstants.KEY_FONT_SCALE, FontScaleConstants.NORMAL);
     state.receiveCount = 0;
+    state.lastChatMessageDatetime = '';
   }
 
   double get fontScale => state.fontScale;
@@ -36,5 +37,10 @@ class SystemGlobalStore extends GlobalStoreBase<SystemGlobalState> {
 
   void setReceiveCount(int value) {
     state.receiveCount = value;
+  }
+
+  String get lastChatMessageDatetime => state.lastChatMessageDatetime;
+  void setLastChatMessageDatetime(String value) {
+    state.lastChatMessageDatetime = value;
   }
 }

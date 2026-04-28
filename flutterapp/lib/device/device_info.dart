@@ -44,6 +44,11 @@ class XtmDeviceInfo {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
     return packageInfo.version;
   }
+
+  Future<PackageInfo> getPackageInfo() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    return packageInfo;
+  }
 }
 
 var xtmDeviceInfo = XtmDeviceInfo();

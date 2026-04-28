@@ -4,6 +4,7 @@ import 'package:flutter_proj/device/device_file_picker.dart';
 import 'package:flutter_proj/device/device_permission.dart';
 import 'package:flutter_proj/device/device_info.dart';
 import 'package:flutter_proj/device/device_phone.dart';
+import 'package:flutter_proj/device/device_llocation.dart';
 
 class Device {
   Device._internal();
@@ -23,6 +24,8 @@ class Device {
   XtmDeviceInfo get deviceInfo => xtmDeviceInfo;
 
   XtmPhone get phone => xtmPhone;
+
+  XtmLocation get location => xtmLocation;
 }
 
 var xtmDevice = Device();

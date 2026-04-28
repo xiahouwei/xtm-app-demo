@@ -9,10 +9,10 @@ enum HTTP_REQUEST_APP_TYPE { NORMAL, TMS }
 
 class ApiVersionIosConstants {
   static const RELEASE = '1.0.0';
-  static const PRE = '1.0.0';
+  static const PRE = '3.10.9';
   static const DEV = '1.0.0';
   static const SIT3 = '3.10.6';
-  static const QA = '3.3.1';
+  static const QA = '3.10.6';
 }
 
 class EnvConfig {
@@ -92,11 +92,11 @@ class EnvConfig {
       apiLog: false,
     ),
     'slw': EnvConfig(
-      serverDomainType: ServerDomainType.SIT3,
-      chatDomain: ChatWebDomainConstants.SIT3,
-      chatServiceDomain: ChatServerDomainConstants.SIT3,
-      apiVersionIOS: ApiVersionIosConstants.SIT3,
-      dioKit: UME_KIT.OPEN,
+      serverDomainType: ServerDomainType.PRE,
+      chatDomain: ChatWebDomainConstants.PRE,
+      chatServiceDomain: ChatServerDomainConstants.PRE,
+      apiVersionIOS: ApiVersionIosConstants.PRE,
+      dioKit: UME_KIT.CLOSE,
       umeKit: UME_KIT.CLOSE,
       apiLog: false,
     ),
@@ -155,5 +155,15 @@ class HTTPConfig {
 
   static void updateDomain(String domain) {
     HTTPConfig.serverDomain = domain;
+  }
+
+  static void updateDomainByIos(String mobile) {
+    if (Platform.isIOS && mobile != null && mobile == '18232507362') {
+      HTTPConfig.serverDomainType = ServerDomainType.PRE;
+      HTTPConfig.serverDomain = HttpServerDomain.getDefaultServerDomainModel().envDomain;
+      HTTPConfig.chatServiceDomain = ChatServerDomainConstants.PRE;
+      HTTPConfig.chatDomain = ChatWebDomainConstants.PRE;
+      HTTPConfig.apiVersion = ApiVersionIosConstants.PRE;
+    }
   }
 }

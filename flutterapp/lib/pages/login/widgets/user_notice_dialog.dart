@@ -70,7 +70,7 @@ class UserNoticeDialog {
         style: TextStyle(color: highLightColor, fontWeight: fontWeight, fontSize: fontSize),
         recognizer: TapGestureRecognizer()
           ..onTap = () {
-            H5PageManange.navigator2PrivacyAgreementPage();
+            H5PageManager.navigator2PrivacyAgreementPage();
           },
       ),
       _factoryTextSpan(textStr: '，并充分了解以下权限申请情况：'),

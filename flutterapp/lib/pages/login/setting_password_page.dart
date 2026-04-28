@@ -42,8 +42,9 @@ class _SettingPasswordPageState extends State<SettingPasswordPage> {
       return;
     }
     Map params = {};
-    params['id'] = widget.userId;
+    params['userId'] = widget.userId;
     params['password'] = _pwsStr;
+    params['pw'] = _pwsStr;
     xtmApi.auth.setPassword(params: params).then((res) {
       XtmToast.success('密码设置成功');
       Future.delayed(Duration(seconds: 1)).then((value) => changeRootPageAndLoginStatus());
@@ -53,7 +54,18 @@ class _SettingPasswordPageState extends State<SettingPasswordPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: XtmAppBar(title: '设置登录密码'),
+      appBar: XtmAppBar(
+        title: '设置登录密码',
+        rightActions: [
+          InkWell(
+            onTap: () => changeRootPageAndLoginStatus(),
+            child: Padding(
+              padding: const EdgeInsets.only(top: 20.0, right: 10.0, left: 10.0),
+              child: Text('跳过', style: TextStyle(color: Colors.blue)),
+            ),
+          )
+        ],
+      ),
       body: GestureDetector(
         child: Container(
           color: Colors.white,
