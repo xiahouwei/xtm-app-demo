@@ -17,6 +17,7 @@ export 'src/components/input/xtm_input_formatter.dart';
 export 'src/components/refresh/xtm_refresh.dart';
 export 'src/components/toast/xtm_toast.dart';
 export 'src/components/step_progress/xtm_step_progress.dart';
+export 'src/components/radio/xtm_radio.dart';
 export 'src/constants/xtm_dialog_constants.dart';
 export 'src/enum/xtm_dialog_enums.dart';
 export 'src/xtm_design_config.dart';

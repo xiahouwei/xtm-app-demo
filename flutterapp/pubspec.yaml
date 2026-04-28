@@ -101,8 +101,5 @@ flutter:
     - assets/images/version_update/
     - lib/xtmdesign_component/assets/images/
     # 业务资源
-    - assets/images/home/
-    - assets/images/message/
-    - assets/images/mine/
     - assets/images/login/
 

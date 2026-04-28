@@ -17,7 +17,7 @@ class XtmDesignConfiguration {
   Color mainTextColor = Color(0xFF333333);
 
   /// 禁用色
-  Color enableColor = Color(0xFFD6DAE1);
+  Color disabledColor = Color(0xFFD6DAE1);
 
   /// 字体缩放倍数
   double fontScale = 1.0;

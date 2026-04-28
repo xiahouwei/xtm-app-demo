@@ -112,7 +112,7 @@ class _XTMNetworkImager extends ImageProvider<_XTMNetworkImager> {
       url,
       scale: scale,
       headers: {
-        'Authorization': token,
+        'token': token,
       },
     );
     return networkImage.load(networkImage, decode);

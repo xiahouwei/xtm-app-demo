@@ -52,7 +52,7 @@ class _StepWidgetState extends State<StepWidget> {
           text: '上一步',
           width: 80,
           onPressed: () => onPreviousClick(),
-          enabled: _currentIndex > 0,
+          disabled: _currentIndex == 0,
         ),
         SizedBox(width: 8.0),
         Expanded(child: _buildStepShow()),
@@ -67,7 +67,7 @@ class _StepWidgetState extends State<StepWidget> {
               await onNextClick();
             }
           },
-          enabled: widget.stepList[_currentIndex].stepEnable,
+          disabled: !(widget.stepList[_currentIndex].stepEnable),
         ),
         SizedBox(width: 10.0),
       ],

@@ -9,37 +9,35 @@ import 'package:flutter/material.dart';
 /// 示例：
 /// ```dart
 /// List<XtmStepProgressOption> steps = [
-///   XtmStepProgressOption(title: '派单', content: '互联互通（天津小铁马科技有限公司）', datetime: '2025-01-01 23:59:59'),
-///   XtmStepProgressOption(title: '录入原发', content: ''),
-///   XtmStepProgressOption(title: '签到打卡', content: '当前未通知进厂，请耐心等待！'),
+///   XtmStepProgressOption(title: '请在围栏等待'),
+///   XtmStepProgressOption(title: '请驶出围栏，通过安保卡口进入南路等待'),
+///   XtmStepProgressOption(title: '请在南路排队，等待商务卡口验证进入堆场'),
+///   XtmStepProgressOption(title: '请通过商务卡口进入堆场'),
+///   XtmStepProgressOption(title: '已过皮等待铲车刷卡，装车'),
+///   XtmStepProgressOption(title: '铲车已刷卡，装车完成后，请过重磅苦盖后驶出港区'),
+///   XtmStepProgressOption(title: '请过重磅苦盖后驶出港区'),
 /// ];
 ///
 /// XtmStepProgress(
 ///   steps: steps,
-///   activeIndex: 1,
+///   activeIndex: 3,
 /// )
 /// ```
 class XtmStepProgressOption<T> {
   final String title;
-  final String content;
-  final String datetime;
 
   XtmStepProgressOption({
     @required this.title,
-    this.content,
-    this.datetime,
   });
 }
 
 class XtmStepProgress extends StatefulWidget {
   final List<XtmStepProgressOption> steps;
   final int activeIndex;
-
   XtmStepProgress({
     @required this.steps,
     @required this.activeIndex,
   });
-
   @override
   State<XtmStepProgress> createState() => _XtmStepProgressState();
 }
@@ -77,48 +75,21 @@ class _XtmStepProgressState extends State<XtmStepProgress> {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildStepIndicator(
-              isCompleted: isCompleted, isActive: isActive, isLast: isLast),
+          _buildStepIndicator(isCompleted: isCompleted, isActive: isActive, isLast: isLast),
           const SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        stepData.title ?? '',
-                        style: TextStyle(
-                          fontSize: 15,
-                          fontWeight:
-                              isActive ? FontWeight.bold : FontWeight.normal,
-                          color: isCompleted || isActive
-                              ? Colors.black87
-                              : Colors.grey,
-                        ),
-                      ),
-                    ),
-                    Text(
-                      stepData.datetime ?? '',
-                      style: TextStyle(
-                        fontSize: 13,
-                        fontWeight: FontWeight.normal,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 4),
                 Text(
-                  stepData.content ?? '',
+                  stepData.title,
                   style: TextStyle(
-                    fontSize: 13,
-                    fontWeight: FontWeight.normal,
-                    color: Colors.grey,
+                    fontSize: 15,
+                    fontWeight: isActive ? FontWeight.bold : FontWeight.normal,
+                    color: isCompleted || isActive ? Colors.black87 : Colors.grey,
                   ),
                 ),
-                SizedBox(height: 16)
+                SizedBox(height: 10)
               ],
             ),
           ),
@@ -194,8 +165,7 @@ class _XtmStepProgressState extends State<XtmStepProgress> {
         offset: Offset(0, 4),
         child: Column(
           children: [
-            _buildSetpIcon(
-                isCompleted: isCompleted, isActive: isActive, isLast: isLast),
+            _buildSetpIcon(isCompleted: isCompleted, isActive: isActive, isLast: isLast),
             Visibility(
               visible: !isLast,
               child: Expanded(

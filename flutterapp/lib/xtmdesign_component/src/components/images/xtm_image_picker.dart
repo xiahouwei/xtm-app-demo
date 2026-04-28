@@ -2,9 +2,10 @@ import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_proj/device/index.dart';
-import 'package:flutter_proj/xtmdesign_component/src/components/images/xtm_net_image.dart';
+import 'package:flutter_proj/device/device_image_picker.dart';
 import 'package:flutter_proj/xtmdesign_component/src/xtm_design_config.dart';
+
+import 'xtm_net_image.dart';
 
 /// [XtmImagePicker] 图片选择器
 ///
@@ -192,7 +193,7 @@ class _XtmImagePickerState extends State<XtmImagePicker> {
         if (value == "Camera") {
           openCamera();
         } else if (value == "Gallery") {
-          xtmDevice.imagePicker.getImageByGallery().then((value) {
+          xtmImagePicker.getImageByGallery().then((value) {
             widget.onImageSelected(value);
             setState(() {
               imgPath = value;
@@ -205,7 +206,7 @@ class _XtmImagePickerState extends State<XtmImagePicker> {
 
   /// 打开相机
   void openCamera() {
-    xtmDevice.imagePicker.getImageByCamera().then((value) {
+    xtmImagePicker.getImageByCamera().then((value) {
       widget.onImageSelected(value);
       setState(() {
         imgPath = value;
