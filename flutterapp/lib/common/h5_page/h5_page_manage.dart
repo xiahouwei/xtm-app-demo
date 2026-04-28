@@ -41,14 +41,4 @@ class H5PageManager {
       }),
     );
   }
-
-  /// 跳转到数字签约页面
-  static Future navigator2SigningPage(String url, String titleStr) {
-    return Navigator.push(
-      NavigatorProvider.navigatorContext,
-      new MaterialPageRoute(builder: (BuildContext context) {
-        return WebViewPage(urlString: url, titleStr: titleStr, showProgress: true);
-      }),
-    );
-  }
 }

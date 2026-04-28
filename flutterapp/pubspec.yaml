@@ -95,7 +95,6 @@ flutter:
     # 模板资源
     - assets/icons/
     - assets/icons/bottom_bar/
-    - assets/images/tabbar/
     - assets/images/widgets/
     - assets/images/placeholder/
     - assets/images/version_update/
