@@ -10,7 +10,7 @@ import 'package:path_provider/path_provider.dart';
 class PDFViewerPage extends StatefulWidget {
   final String path;
   final String titleStr;
-  PDFViewerPage({this.path,this.titleStr});
+  PDFViewerPage({this.path, this.titleStr});
 
   _PDFViewerPageState createState() => _PDFViewerPageState();
 }
@@ -50,9 +50,7 @@ class _PDFViewerPageState extends State<PDFViewerPage> with WidgetsBindingObserv
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: widget.titleStr != null ? XtmAppBar(
-        title: widget.titleStr
-      ) : null,
+      appBar: widget.titleStr != null ? XtmAppBar(title: widget.titleStr) : null,
       body: _buildBody(),
       floatingActionButton: FutureBuilder<PDFViewController>(
         future: _controller.future,
@@ -83,29 +81,25 @@ class _PDFViewerPageState extends State<PDFViewerPage> with WidgetsBindingObserv
       child: Container(
         margin: widget.titleStr != null ? EdgeInsets.all(15) : EdgeInsets.zero,
         padding: widget.titleStr != null ? EdgeInsets.all(15) : EdgeInsets.zero,
-        decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(6)
-        ),
-        child: Column (
+        decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(6)),
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Expanded(
-                child:Stack(
-                  children: [
-                    pdfView,
-                    errorMessage.isEmpty
-                        ? !isReady
+                child: Stack(
+              children: [
+                pdfView,
+                errorMessage.isEmpty
+                    ? !isReady
                         ? Center(
-                      child: CircularProgressIndicator(),
-                    )
+                            child: CircularProgressIndicator(),
+                          )
                         : Container()
-                        : Center(
-                      child: Text(errorMessage),
-                    )
-                  ],
-                )
-            ),
+                    : Center(
+                        child: Text(errorMessage),
+                      )
+              ],
+            )),
           ],
         ),
       ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_proj/theme/xtm_color.dart';
 import 'package:flutter_proj/widgets/lazy_indexed_stack.dart';
+import 'package:flutter_proj/widgets/message_bubble.dart';
 import 'package:flutter_proj/xtmdesign_component/src/components/toast/xtm_toast.dart';
 import 'package:flutter_proj/pages/home/home_page.dart';
 import 'package:flutter_proj/pages/waybill/waybill_page.dart';
@@ -20,6 +21,7 @@ class _MainPageState extends State<MainPage> {
   final _waybillKey = GlobalKey<WaybillPageState>();
   final _messageKey = GlobalKey<MessagePageState>();
   final _mineKey = GlobalKey<MinePageState>();
+  int _msgCount = 0;
   @override
   void initState() {
     super.initState();
@@ -48,10 +50,30 @@ class _MainPageState extends State<MainPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                _buildTabItem(index: 0, icon: Icons.home, label: '首页'),
-                _buildTabItem(index: 1, icon: Icons.app_registration, label: '运单'),
-                _buildTabItem(index: 2, icon: Icons.message, label: '消息'),
-                _buildTabItem(index: 3, icon: Icons.person, label: '我的'),
+                _buildTabItem(
+                  index: 0,
+                  iconPath: 'assets/icons/bottom_bar/icon_home.png',
+                  selectedIconPath: 'assets/icons/bottom_bar/icon_home_select.png',
+                  label: '首页',
+                ),
+                _buildTabItem(
+                  index: 1,
+                  iconPath: 'assets/icons/bottom_bar/icon_order.png',
+                  selectedIconPath: 'assets/icons/bottom_bar/icon_order_select.png',
+                  label: '运单',
+                ),
+                _buildTabItem(
+                    index: 2,
+                    iconPath: 'assets/icons/bottom_bar/icon_msg.png',
+                    selectedIconPath: 'assets/icons/bottom_bar/icon_msg_select.png',
+                    label: '消息',
+                    msgCount: _msgCount),
+                _buildTabItem(
+                  index: 3,
+                  iconPath: 'assets/icons/bottom_bar/icon_mine.png',
+                  selectedIconPath: 'assets/icons/bottom_bar/icon_mine_select.png',
+                  label: '我的',
+                ),
               ],
             ),
           ),
@@ -60,7 +82,8 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
-  Widget _buildTabItem({int index, IconData icon, String label}) {
+  Widget _buildTabItem(
+      {int index, String iconPath, String selectedIconPath, String label, int msgCount}) {
     return Expanded(
       child: InkWell(
         onTap: () {
@@ -82,16 +105,20 @@ class _MainPageState extends State<MainPage> {
               break;
           }
         },
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
+        child: Stack(
+          alignment: AlignmentDirectional.center,
           children: [
-            Icon(
-              icon,
-              size: 24,
-              color: _bottomBarIndex == index ? Color(0xFF1773FF) : XtmColor.gray,
+            Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _bottomBarIndex == index
+                    ? Image.asset(selectedIconPath, width: 28, height: 28, fit: BoxFit.fill)
+                    : Image.asset(iconPath, width: 28, height: 28, fit: BoxFit.fill),
+                SizedBox(height: 4),
+                _buildItemText(index: index, label: label),
+              ],
             ),
-            SizedBox(height: 4),
-            _buildItemText(index: index, label: label)
+            _buildBubble(msgCount),
           ],
         ),
       ),
@@ -104,6 +131,19 @@ class _MainPageState extends State<MainPage> {
       style: TextStyle(
         color: _bottomBarIndex == index ? XtmColor.themeColor : XtmColor.black,
         fontSize: 12,
+      ),
+    );
+  }
+
+  Widget _buildBubble(int msgCount) {
+    return Visibility(
+      visible: msgCount != null && msgCount > 0,
+      child: Positioned(
+        top: 0,
+        right: 14,
+        child: MessageBubble(
+          messageCount: msgCount,
+        ),
       ),
     );
   }
