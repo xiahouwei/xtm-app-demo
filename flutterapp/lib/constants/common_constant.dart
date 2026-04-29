@@ -6,10 +6,6 @@ class CommonConstant {
   static const int ROLE_DRIVER = 1;
 }
 
-class AppChannel {
-  static const String appChannelName = "transport";
-}
-
 /// 文件上传业务源
 class UploadBusSourceConstant {
   /// 车辆管理相关

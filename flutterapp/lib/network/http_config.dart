@@ -112,15 +112,12 @@ class EnvConfig {
 class HTTPConfig {
   static String appKey = 'oSTkfoDh9nk6nPNe3Azhgt';
   static String appSecret = '2CtFi6gzDb2Hq3rRPQzhgt';
-  static String aMapKeyAndroid = '40a856c8cbc65117a91cc850a7a5740c';
-  static String aMapKeyIOS = 'c54eac435e435bb98176bdd07f8a1e03';
   static String serverDomain = '';
   static String chatDomain = '';
   static String chatServiceDomain = '';
   static ServerDomainType serverDomainType;
   static String serverPath = '/apiPlat/';
   static String apiVersion = '1.0.0';
-  static String bundleID = 'com.tjxtm.tmstransport';
   static String baseToken = 'Basic bHBEcml2ZXJBcHA6QWExMjM0NTY=';
   static String terminal = 'transport';
   static HTTP_REQUEST_APP_TYPE appType = HTTP_REQUEST_APP_TYPE.TMS;

@@ -1,6 +1,6 @@
 import 'dart:io';
 
-import 'package:flutter_proj/constants/common_constant.dart';
+import 'package:flutter_proj/config/app_config.dart';
 import 'package:flutter_proj/network/http_api.dart';
 import 'package:flutter_proj/network/http_manager.dart';
 import 'package:flutter_proj/network/tms_http_request.dart';
@@ -88,7 +88,7 @@ class AuthApi {
           'clientId': xtmGlobalStore.auth.clientId,
           'userId': xtmGlobalStore.auth.userInfo.userID,
           'type': Platform.isIOS ? 1 : 2,
-          'appChannel': AppChannel.appChannelName
+          'appChannel': AppConfig.APP_CHANNEL_NAME
         },
       ));
 
@@ -99,7 +99,7 @@ class AuthApi {
           'clientId': xtmGlobalStore.auth.clientId,
           'userId': xtmGlobalStore.auth.userInfo.userID,
           'type': Platform.isIOS ? 1 : 2,
-          'appChannel': AppChannel.appChannelName
+          'appChannel': AppConfig.APP_CHANNEL_NAME
         },
       ));
 }

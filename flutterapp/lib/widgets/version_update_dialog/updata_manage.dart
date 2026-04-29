@@ -1,15 +1,15 @@
 import 'dart:io';
 
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_proj/network/http_config.dart';
-import 'package:flutter_proj/store/global_store.dart';
-import 'package:flutter_proj/widgets/progress_indicator.dart';
 import 'package:install_plugin_v2/install_plugin_v2.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:url_launcher/url_launcher_string.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_proj/store/global_store.dart';
+import 'package:flutter_proj/widgets/progress_indicator.dart';
 import 'package:flutter_proj/common/event_bus/event_bus.dart';
 import 'package:flutter_proj/common/event_bus/event_bus_type.dart';
+import 'package:flutter_proj/config/app_config.dart';
 
 typedef DownloadCallback = Function(bool isSuccess);
 
@@ -25,7 +25,7 @@ class UpDataManage {
       {DownloadCallback callback}) async {
     // 获取APP安装路径
     if (Platform.isIOS) {
-      String url = 'itms-apps://itunes.apple.com/app/id6758364347';
+      String url = AppConfig.APP_STORE_URL;
       if (await canLaunchUrlString(url)) {
         await launchUrlString(url);
       } else {
@@ -52,7 +52,7 @@ class UpDataManage {
         return;
       }
 
-      InstallPlugin.installApk(_apkFilePath, HTTPConfig.bundleID).then((result) {
+      InstallPlugin.installApk(_apkFilePath, AppConfig.APP_ANDROID_ID).then((result) {
         _downloadCallback(callback, true);
         Navigator.pop(context);
         print('install apk $result');

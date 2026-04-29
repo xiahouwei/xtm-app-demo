@@ -6,9 +6,9 @@ import 'package:amap_flutter_location/amap_flutter_location.dart';
 import 'package:amap_flutter_location/amap_location_option.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_proj/device/index.dart';
-import 'package:flutter_proj/network/http_config.dart';
 import 'package:flutter_proj/widgets/tms_loading.dart';
 import 'package:flutter_proj/xtmdesign_component/src/components/toast/xtm_toast.dart';
+import 'package:flutter_proj/config/app_config.dart';
 
 class XtmLocation {
   AMapFlutterLocation _locationOncePlugin;
@@ -28,7 +28,7 @@ class XtmLocation {
   factory XtmLocation() => _instance;
 
   XtmLocation._internal() {
-    AMapFlutterLocation.setApiKey(HTTPConfig.aMapKeyAndroid, HTTPConfig.aMapKeyIOS);
+    AMapFlutterLocation.setApiKey(AppConfig.APP_AMAP_KEY_ANDROID, AppConfig.APP_AMAP_KEY_IOS);
     _locationOncePlugin = AMapFlutterLocation();
     _locationOncePlugin.onLocationChanged().listen((Map<String, Object> result) {
       print('=====高德回调=====$result');

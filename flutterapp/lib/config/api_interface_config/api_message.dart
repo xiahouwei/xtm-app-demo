@@ -1,4 +1,5 @@
 import 'package:flutter_proj/constants/common_constant.dart';
+import 'package:flutter_proj/config/app_config.dart';
 import 'package:flutter_proj/network/http_api.dart';
 import 'package:flutter_proj/utils/time_utils.dart';
 
@@ -8,33 +9,34 @@ class ApiMessage {
         HttpOptions(
           path: 'msg/setting/message/index',
           queryParameters: {
-            'appChannel': AppChannel.appChannelName,
+            'appChannel': AppConfig.APP_CHANNEL_NAME,
           },
           showLoading: showLoading,
         ),
       );
 
   /// 某类消息类型列表
-  Future<T> getMessageList<T>(int pageNum, int type, String startTime, String endTime) async => xtmHttpApi.post(
-    HttpOptions(
-      path: 'msg/setting/message/detail',
-      params: {
-        'appChannel': AppChannel.appChannelName,
-        'pageNum': pageNum,
-        'pageSize': CommonConstant.PAGE_SIZE,
-        'type': type,
-        'startTime': TimeUtils.getBeginOfDay(date: startTime),
-        'endTime': TimeUtils.getEndOfDay(date: endTime),
-      },
-    ),
-  );
+  Future<T> getMessageList<T>(int pageNum, int type, String startTime, String endTime) async =>
+      xtmHttpApi.post(
+        HttpOptions(
+          path: 'msg/setting/message/detail',
+          params: {
+            'appChannel': AppConfig.APP_CHANNEL_NAME,
+            'pageNum': pageNum,
+            'pageSize': CommonConstant.PAGE_SIZE,
+            'type': type,
+            'startTime': TimeUtils.getBeginOfDay(date: startTime),
+            'endTime': TimeUtils.getEndOfDay(date: endTime),
+          },
+        ),
+      );
 
   /// 最新消息列表
   Future<T> getUnReadMessageList<T>(int pageNum) async => xtmHttpApi.post(
         HttpOptions(
           path: 'msg/setting/message/unRead/list',
           params: {
-            'appChannel': AppChannel.appChannelName,
+            'appChannel': AppConfig.APP_CHANNEL_NAME,
             'pageNum': pageNum,
             'pageSize': CommonConstant.PAGE_SIZE
           },
@@ -43,29 +45,25 @@ class ApiMessage {
 
   /// 一键已读
   Future<T> clearUnReadMessage<T>() async => xtmHttpApi.post(
-    HttpOptions(
-      path: 'msg/setting/message/readAll',
-      queryParameters: {
-        'appChannel': AppChannel.appChannelName,
-      },
-    ),
-  );
+        HttpOptions(
+          path: 'msg/setting/message/readAll',
+          queryParameters: {
+            'appChannel': AppConfig.APP_CHANNEL_NAME,
+          },
+        ),
+      );
 
   /// 消息详情
   Future<T> getMessageDetail<T>(String id) async => xtmHttpApi.get(
-    HttpOptions(
-      path: 'msg/setting/message/detailInfo/$id',
-    ),
-  );
+        HttpOptions(
+          path: 'msg/setting/message/detailInfo/$id',
+        ),
+      );
 
   /// 消息详情标记已读
   Future<T> clearMessageDetailUnRead<T>(String id) async => xtmHttpApi.put(
-    HttpOptions(
-      path: 'msg/message/read/$id',
-    ),
-  );
-
-
-
-
+        HttpOptions(
+          path: 'msg/message/read/$id',
+        ),
+      );
 }
