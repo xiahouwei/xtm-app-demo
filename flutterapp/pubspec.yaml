@@ -76,6 +76,9 @@ dependencies:
   video_compress: 3.1.0
   # 生成二维码
   qr_flutter: 4.0.0
+  # 滑动操作
+  flutter_slidable: 1.2.0
+  
 
   # 调试工具
   flutter_ume: 1.1.0
@@ -95,7 +98,6 @@ flutter:
     # 模板资源
     - assets/icons/
     - assets/icons/bottom_bar/
-    - assets/images/widgets/
     - assets/images/placeholder/
     - assets/images/version_update/
     - lib/xtmdesign_component/assets/images/
