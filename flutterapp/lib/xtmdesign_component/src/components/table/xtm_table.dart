@@ -93,6 +93,7 @@ class _XtmTableState extends State<XtmTable> {
     final double totalTableWidth = columns.fold(0, (sum, item) {
       return sum + item.width.toDouble();
     });
+    bool showTotalRow = widget.columns.any((item) => item.totalFlag == 1);
     return Column(
       children: [
         Container(
@@ -190,61 +191,62 @@ class _XtmTableState extends State<XtmTable> {
             ),
           ),
         ),
-        Container(
-          decoration: BoxDecoration(
-            color: Color(0xFFF5F5F5),
-            border: Border(
-              top: BorderSide(color: Color(0xFFE0E0E0)),
-              bottom: BorderSide(color: Color(0xFFE0E0E0)),
+        if (showTotalRow)
+          Container(
+            decoration: BoxDecoration(
+              color: Color(0xFFF5F5F5),
+              border: Border(
+                top: BorderSide(color: Color(0xFFE0E0E0)),
+                bottom: BorderSide(color: Color(0xFFE0E0E0)),
+              ),
             ),
-          ),
-          child: SingleChildScrollView(
-            controller: _bottomController,
-            scrollDirection: Axis.horizontal,
-            child: SizedBox(
-              width: totalTableWidth,
-              height: 40,
-              child: Row(
-                children: List.generate(columns.length, (index) {
-                  String totalText = '';
-                  if (index == 0) {
-                    totalText = '合计';
-                  } else if (columns[index].totalFlag == 1) {
-                    final Decimal total = rows.fold<Decimal>(Decimal.zero, (sum, item) {
-                      final value = Decimal.tryParse(
-                            item[columns[index].field]?.toString() ?? '0',
-                          ) ??
-                          Decimal.zero;
-                      return sum + value;
-                    });
-                    totalText = total.toString();
-                  }
-                  return Container(
-                    width: columns[index].width.toDouble(),
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                      border: Border(
-                        right: BorderSide(
-                          color: Color(0xFFE0E0E0),
+            child: SingleChildScrollView(
+              controller: _bottomController,
+              scrollDirection: Axis.horizontal,
+              child: SizedBox(
+                width: totalTableWidth,
+                height: 40,
+                child: Row(
+                  children: List.generate(columns.length, (index) {
+                    String totalText = '';
+                    if (index == 0) {
+                      totalText = '合计';
+                    } else if (columns[index].totalFlag == 1) {
+                      final Decimal total = rows.fold<Decimal>(Decimal.zero, (sum, item) {
+                        final value = Decimal.tryParse(
+                              item[columns[index].field]?.toString() ?? '0',
+                            ) ??
+                            Decimal.zero;
+                        return sum + value;
+                      });
+                      totalText = total.toString();
+                    }
+                    return Container(
+                      width: columns[index].width.toDouble(),
+                      alignment: Alignment.center,
+                      decoration: BoxDecoration(
+                        border: Border(
+                          right: BorderSide(
+                            color: Color(0xFFE0E0E0),
+                          ),
                         ),
                       ),
-                    ),
-                    child: Text(
-                      totalText,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                        color: Color(0xFF606266),
+                      child: Text(
+                        totalText,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: Color(0xFF606266),
+                        ),
                       ),
-                    ),
-                  );
-                }),
+                    );
+                  }),
+                ),
               ),
             ),
           ),
-        ),
       ],
     );
   }
