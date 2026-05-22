@@ -201,12 +201,24 @@ class StringUtils {
       print(tip);
       pass = false;
     }
-//  print('证件格式$pass');
     return pass;
   }
 
   ///只包含字母或数字
   static bool numberAndLetterOnly(String str) {
     return RegExp("^[A-Za-z0-9]+\$").hasMatch(str);
+  }
+
+  /// 空串 或  null 格式化
+  static String emptyFormat(String value) {
+    if (value == null || value.isEmpty || value.contains('null')) {
+      return '-';
+    }
+    return value;
+  }
+
+  ///  判断是否是null或者空字符串
+  static bool isEmptyText(String value) {
+    return value == null || value.isEmpty || value.trim().isEmpty || value.contains('null');
   }
 }

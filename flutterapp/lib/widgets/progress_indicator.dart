@@ -59,7 +59,6 @@ class _UpdateWidgetState extends State<UpdateWidget> {
       } else {
         ///有增加
         _totalReceive = rec;
-        print('---下载进度-----$rec----');
         setState(() {});
       }
     }

@@ -29,13 +29,27 @@ class ShowUserAgreementDialog {
                 style: TextStyle(
                     color: Colors.black87, fontSize: 16 * xtmGlobalStore.system.fontScale)),
             TextSpan(
-              text: '《隐私政策》',
+              text: '《小铁马平台用户使用协议》',
               style: TextStyle(color: XtmColor.themeColor, fontSize: 14),
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
-                  H5PageManager.navigator2PrivacyAgreementPage();
+                  H5PageManager.navigator2UserAgreementPage();
                 },
             ),
+            TextSpan(
+                text: '《隐私政策》',
+                style: TextStyle(color: XtmColor.themeColor, fontSize: 14),
+                recognizer: TapGestureRecognizer()
+                  ..onTap = () {
+                    H5PageManager.navigator2PrivacyAgreementPage();
+                  }),
+            TextSpan(
+                text: '《平台交易规则协议》',
+                style: TextStyle(color: XtmColor.themeColor, fontSize: 14),
+                recognizer: TapGestureRecognizer()
+                  ..onTap = () {
+                    H5PageManager.navigator2PlatformTransactionRulesPage();
+                  }),
           ],
         ),
       ),

@@ -21,7 +21,6 @@ class XtmRecord {
     });
 
     recordPlugin.response.listen((data) {
-      print('---------data-----------');
       if (data.msg == "onStop") {
         print("onStop  文件路径" + data.path);
         filePath = data.path;

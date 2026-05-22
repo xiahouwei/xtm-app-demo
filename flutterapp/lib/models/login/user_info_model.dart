@@ -50,7 +50,9 @@ class UserInfoModel {
       userName: json["userName"],
       portraitPhotoUrl: json['portraitPhotoUrl'],
       idNumber: json['idNumber'],
-      companyInfo: json["companyInfo"] != null ? CompanyInfo.fromJson(json["companyInfo"]) : null,
+      companyInfo: json["companyInfo"] != null
+          ? CompanyInfo.fromJson(json["companyInfo"])
+          : null,
       isVehicleOperator: json["isVehicleOperator"],
       vehicleOperatorId: json["vehicleOperatorId"]);
 
@@ -85,6 +87,9 @@ class CompanyInfo {
   /// 认证状态 0未认证 1已认证
   int certificationStatus;
 
+  /// 统一社会信用代码
+  String unifiedSocialCreditIdentifier;
+
   CompanyInfo({
     this.companyID,
     this.companyName,
@@ -92,6 +97,7 @@ class CompanyInfo {
     this.companyAgentId,
     this.companyAgentCode,
     this.certificationStatus,
+    this.unifiedSocialCreditIdentifier,
   });
 
   factory CompanyInfo.fromJson(Map<String, dynamic> json) => CompanyInfo(
@@ -101,6 +107,7 @@ class CompanyInfo {
         companyAgentId: json['companyAgentId'],
         companyAgentCode: json['companyAgentCode'],
         certificationStatus: json['certificationStatus'],
+        unifiedSocialCreditIdentifier: json['unifiedSocialCreditIdentifier'],
       );
 
   Map<String, dynamic> toJson() => {
@@ -110,5 +117,6 @@ class CompanyInfo {
         "companyAgentId": companyAgentId,
         "companyAgentCode": companyAgentCode,
         "certificationStatus": certificationStatus,
+        "unifiedSocialCreditIdentifier": unifiedSocialCreditIdentifier,
       };
 }

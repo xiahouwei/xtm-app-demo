@@ -5,6 +5,22 @@ import 'package:flutter_proj/xtmdesign_component/src/constants/area_constants.da
 
 import 'province_model.dart';
 
+/// 城市选择器工具类，用于展示省市区三级联动的底部弹窗。
+///
+/// [XtmCityPicker] 封装了 [showModalBottomSheet]，
+/// 提供标准的省市区滚动选择交互，并在用户点击确认后通过回调返回选中的数据模型。
+///
+/// 示例：
+/// ```dart
+/// XtmCityPicker.showCityPicker(
+///   context,
+///   title: '选择收货地址',
+///   onSelected: (province, city, country, areaCode) {
+///     print('选中地区:  $ {province.provinceName}  $ {city.cityName}  $ {country.countryName}');
+///     print('地区编码:  $ areaCode');
+///   },
+/// )
+/// ```
 class XtmCityPicker {
   static showCityPicker(
     BuildContext context, {
@@ -30,6 +46,14 @@ class XtmCityPicker {
   }
 }
 
+/// 显示城市选择器底部弹窗。
+///
+/// [context] 为构建上下文。
+/// [selectItem] 预留参数，可用于设置默认选中项（当前版本未完全实现）。
+/// [title] 弹窗标题，默认为 '请选择地区'。
+/// [height] 弹窗高度，默认为 300.0。
+/// [isDismissible] 是否允许点击背景关闭弹窗，默认为 true。
+/// [onSelected] 确认选择后的回调，返回省份、城市、区县模型及地区编码。
 class _XtmCityPickerContent extends StatefulWidget {
   /// 标题
   final String title;

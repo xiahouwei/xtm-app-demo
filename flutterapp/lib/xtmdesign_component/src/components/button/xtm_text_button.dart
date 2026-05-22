@@ -76,6 +76,9 @@ enum XtmTextButtonType {
   /// 主题色按钮
   PRIMARY,
 
+  /// 白色按钮
+  INFO,
+
   /// 红色按钮
   ERROR,
 }
@@ -226,6 +229,20 @@ class XtmTextButton extends StatelessWidget {
           textColor: Colors.white,
           backgroundColor: xtmDesignConfig.mainColor,
           borderSideColor: xtmDesignConfig.mainColor,
+        );
+      }
+      if (type == XtmTextButtonType.INFO) {
+        if (plain) {
+          return XtmTextButtonColors(
+            textColor: xtmDesignConfig.titleTextColor,
+            backgroundColor: Colors.white,
+            borderSideColor: xtmDesignConfig.dividerColor,
+          );
+        }
+        return XtmTextButtonColors(
+          textColor: xtmDesignConfig.titleTextColor,
+          backgroundColor: Colors.white,
+          borderSideColor: Colors.white,
         );
       }
       if (type == XtmTextButtonType.ERROR) {

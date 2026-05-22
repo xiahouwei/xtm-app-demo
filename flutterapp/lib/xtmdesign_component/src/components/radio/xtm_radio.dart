@@ -41,41 +41,58 @@ class XtmRadioGroup<T> extends StatelessWidget {
   final List<XtmRadioOption<T>> options;
   final T groupValue;
   final ValueChanged<T> onChanged;
-  final MainAxisAlignment alignment;
+  final MainAxisAlignment mainAxisAlignment;
+  final double fontSize;
   const XtmRadioGroup({
     Key key,
     this.title,
+    this.fontSize = 15,
     @required this.options,
     @required this.groupValue,
     @required this.onChanged,
-    this.alignment = MainAxisAlignment.start,
+    this.mainAxisAlignment = MainAxisAlignment.start,
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: alignment,
+      mainAxisAlignment: mainAxisAlignment,
       children: [
         if (title != null)
           Padding(
             padding: const EdgeInsets.only(right: 8),
             child: Text(
               title,
-              style: TextStyle(fontSize: 12),
+              style: TextStyle(fontSize: fontSize),
             ),
           ),
-        ...options.map((option) {
+        ...options.asMap().entries.map((entry) {
+          final index = entry.key;
+          final option = entry.value;
           return Row(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Radio<T>(
-                value: option.value,
-                groupValue: groupValue,
-                onChanged: onChanged,
+              InkWell(
+                child: Row(
+                  children: [
+                    Icon(
+                      groupValue == option.value
+                          ? Icons.radio_button_checked
+                          : Icons.radio_button_unchecked,
+                      color: Colors.blue,
+                      size: 20,
+                    ),
+                    SizedBox(width: 5),
+                    Text(
+                      option.label,
+                      style: TextStyle(fontSize: fontSize),
+                    ),
+                  ],
+                ),
+                onTap: () {
+                  onChanged(option.value);
+                },
               ),
-              Text(
-                option.label,
-                style: TextStyle(fontSize: 12),
-              ),
+              if (index != options.length - 1) SizedBox(width: 30),
             ],
           );
         }).toList(),

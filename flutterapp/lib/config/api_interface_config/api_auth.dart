@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter_proj/config/app_config.dart';
+import 'package:flutter_proj/constants/common_constant.dart';
 import 'package:flutter_proj/network/http_api.dart';
 import 'package:flutter_proj/network/http_manager.dart';
 import 'package:flutter_proj/network/tms_http_request.dart';
@@ -102,4 +103,22 @@ class AuthApi {
           'appChannel': AppConfig.APP_CHANNEL_NAME
         },
       ));
+
+  /// 获取当前用户可以管理的企业
+  Future<T> getManageCompanyList<T>() async => xtmHttpApi.post(HttpOptions(
+        path: 'tms-company/company/getManageCompanyList',
+        params: {
+          'pageNum': 1,
+          'pageSize': 9999,
+          'companyCertificationState': -1,
+          'organTypeIds': [CommonConstant.SHIPPER, CommonConstant.SHIPPER_AGENT]
+        },
+      ));
+
+  /// 获取所选企业信息
+  Future<T> getCurrentCompanyInfo<T>(String companyId) async => xtmHttpApi.get(
+        HttpOptions(
+          path: 'tms-company/company/$companyId/id',
+        ),
+      );
 }

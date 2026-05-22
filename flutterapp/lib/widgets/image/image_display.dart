@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_proj/constants/image_constants.dart';
 import 'package:flutter_proj/network/http_config.dart';
 import 'package:flutter_proj/store/global_store.dart';
+import 'package:flutter_proj/widgets/image/preview_image_dialog.dart';
 import 'package:flutter_proj/xtmdesign_component/xtm_design.dart';
 
 class DisplayImage extends StatelessWidget {
@@ -13,6 +14,7 @@ class DisplayImage extends StatelessWidget {
   final BoxFit fit;
   final ImageTypeEnum placeholderType;
   final String errorImgPath;
+  final bool isPreview;
 
   DisplayImage({
     Key key,
@@ -24,19 +26,25 @@ class DisplayImage extends StatelessWidget {
     this.fit = BoxFit.contain,
     this.placeholderType,
     this.errorImgPath,
+    this.isPreview = true,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return XtmNetImage.network(
-      imgUrl: imgUrl ?? ((imgId != null && imgId.isNotEmpty) ? _getImageSrcById(imgId) : ''),
-      token: xtmGlobalStore.auth.token ?? '',
-      width: width,
-      height: height,
-      imgDesc: imgDesc,
-      fit: fit,
-      placeholderPath: ImageConstants.getPlaceholderImagePath(placeholderType),
-      errorImgPath: errorImgPath,
+    return GestureDetector(
+      child: XtmNetImage.network(
+        imgUrl: imgUrl ?? _getImageSrcById(imgId),
+        token: xtmGlobalStore.auth.token ?? '',
+        width: width,
+        height: height,
+        imgDesc: imgDesc,
+        fit: fit,
+        placeholderPath: ImageConstants.getPlaceholderImagePath(placeholderType),
+        errorImgPath: errorImgPath,
+      ),
+      onTap: (isPreview && imgId != null)
+          ? () => PreviewImageDialog.show(context, imgId: imgId, imgUrl: imgUrl)
+          : null,
     );
   }
 

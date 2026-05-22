@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter_proj/models/login/current_company_model.dart';
 import 'package:flutter_proj/models/login/user_info_model.dart';
 import 'package:flutter_proj/store/auth/state.dart';
 import 'package:flutter_proj/store/global_store_base.dart';
@@ -15,7 +16,8 @@ class AuthStoreConstants {
   static const String KEY_SHOW_SECRET = "showSecretDialog";
   static const String KEY_PLATFORM_NAME = "platformName";
   static const String KEY_CLIENT_ID = "clientId";
-  static const String KEY_LAST_CHAT_MESSAGE_DATETIME = "lastChatMessageDateTime";
+  static const String KEY_CURRENT_COMPANY_ID = "currentCompanyId";
+  static const String KEY_CURRENT_COMPANY_INFO = "currentCompanyInfo";
 }
 
 class AuthGlobalStore extends GlobalStoreBase<AuthGlobalState> {
@@ -35,6 +37,15 @@ class AuthGlobalStore extends GlobalStoreBase<AuthGlobalState> {
     state.showSecretDialog = await LocalStorage.getBool(AuthStoreConstants.KEY_SHOW_SECRET, true);
     state.platformName = await LocalStorage.get(AuthStoreConstants.KEY_PLATFORM_NAME, '');
     state.clientId = await LocalStorage.get(AuthStoreConstants.KEY_CLIENT_ID, '');
+    state.currentCompanyId = await LocalStorage.get(AuthStoreConstants.KEY_CURRENT_COMPANY_ID, '');
+    state.currentCompany = await getCurrentCompanyByLocalStorage();
+  }
+
+  bool get isLogin => state.isLogin;
+
+  void setIsLogin(bool value) {
+    state.isLogin = value;
+    LocalStorage.set(AuthStoreConstants.KEY_IS_LOGIN, value);
   }
 
   Future<UserInfoModel> getUserInfoByLocalStorage() async {
@@ -43,13 +54,6 @@ class AuthGlobalStore extends GlobalStoreBase<AuthGlobalState> {
       return Future.value(UserInfoModel.fromJson({}));
     }
     return UserInfoModel.fromJson(jsonDecode(userInfoJsonStr) ?? {});
-  }
-
-  bool get isLogin => state.isLogin;
-
-  void setIsLogin(bool value) {
-    state.isLogin = value;
-    LocalStorage.set(AuthStoreConstants.KEY_IS_LOGIN, value);
   }
 
   UserInfoModel get userInfo => state.userInfo;
@@ -106,5 +110,29 @@ class AuthGlobalStore extends GlobalStoreBase<AuthGlobalState> {
   void setClientId(String clientId) {
     state.clientId = clientId;
     LocalStorage.set(AuthStoreConstants.KEY_CLIENT_ID, clientId);
+  }
+
+  String get currentCompanyId => state.currentCompanyId;
+
+  void setCurrentCompanyId(String currentCompanyId) {
+    state.currentCompanyId = currentCompanyId;
+    LocalStorage.set(AuthStoreConstants.KEY_CURRENT_COMPANY_ID, currentCompanyId);
+  }
+
+  Future<CurrentCompanyModel> getCurrentCompanyByLocalStorage() async {
+    String companyInfoJson =
+        await await LocalStorage.get(AuthStoreConstants.KEY_CURRENT_COMPANY_INFO, '');
+    if (companyInfoJson == null || companyInfoJson.isEmpty) {
+      return Future.value(CurrentCompanyModel.fromJson({}));
+    }
+    return CurrentCompanyModel.fromJson(jsonDecode(companyInfoJson) ?? {});
+  }
+
+  CurrentCompanyModel get currentCompany => state.currentCompany;
+
+  void setCurrentCompanyInfo(CurrentCompanyModel value) {
+    state.currentCompany = value;
+    LocalStorage.set(AuthStoreConstants.KEY_CURRENT_COMPANY_INFO,
+        value == null ? '' : jsonEncode(value.toJson()));
   }
 }

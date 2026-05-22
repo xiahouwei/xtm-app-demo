@@ -15,7 +15,6 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await GpushPluginManager.instance.init();
   await xtmGlobalStore.init();
   UiInit.init();
   await HTTPConfig.initHttpConfig();
@@ -37,7 +36,7 @@ class MyApp extends StatelessWidget {
     final botToastBuilder = BotToastInit();
     return UiInit.buildUi(
       MaterialApp(
-        title: 'XTM-APP-模板',
+        title: '小铁马货主端',
         initialRoute: _handleRedirect(),
         routes: AppRoutes.routes,
         navigatorKey: NavigatorProvider.navigatorKey,

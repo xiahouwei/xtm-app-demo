@@ -5,7 +5,7 @@ class XtmColor {
   static const Color themeColor = blue;
 
   ///基础背景色
-  static const Color bgColor = Color(0xFFF0F1F2);
+  static const Color bgColor = Color(0xFFEFF2F7);
 
   ///主要字体的颜色
   static const Color mainTextColor = Color(0xFF333333);
@@ -24,4 +24,10 @@ class XtmColor {
 
   /// 橙色
   static const Color orange = Color(0xFFFF7C0E);
+
+  /// 数字颜色红色
+  static const Color number_text_red = Color(0xFFFF0000);
+
+  /// 金色文字
+  static const Color text_gold = Color(0xFFFDDC9C);
 }

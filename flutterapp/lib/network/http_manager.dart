@@ -63,7 +63,6 @@ class HTTPInterceptor extends Interceptor {
   @override
   void onResponse(Response response, ResponseInterceptorHandler handler) {
     super.onResponse(response, handler);
-    print(response);
   }
 }
 
@@ -130,12 +129,14 @@ class HTTP {
     String mobile = xtmGlobalStore.auth.userInfo.mobile ?? '';
     String trace = traceCounter.createTraceId(mobile);
     String terminal = HTTPConfig.terminal;
+    String currentCompanyId = xtmGlobalStore.auth.currentCompanyId;
     return {
       'token': token,
       'platform': platform,
       'version': apiVersion,
       'terminal': terminal,
       'treeId': trace,
+      'currentCompanyId': currentCompanyId,
     };
   }
 

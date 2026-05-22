@@ -23,7 +23,7 @@ class XtmEventBus {
     _bus.fire(EventBusData(type, data: data));
   }
 
-  StreamSubscription on(EventBusType type, void Function(dynamic data) handler) {
+  StreamSubscription on<T>(EventBusType type, void Function(T data) handler) {
     return _bus.on<EventBusData>().listen((event) {
       if (event.type == type) {
         handler(event.data);

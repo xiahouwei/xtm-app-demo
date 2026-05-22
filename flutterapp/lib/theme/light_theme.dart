@@ -45,7 +45,6 @@ class LightTheme with BaseTheme {
 
   @override
   Color get unSelectBgColor => const Color(0xFFEEF2F4);
-
 }
 
 final xtmLightTheme = LightTheme();

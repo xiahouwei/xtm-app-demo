@@ -28,9 +28,7 @@ class CountdownTimerUtil {
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       if (_remainingSeconds.value > 0) {
         _remainingSeconds.value -= 1;
-        print('Remaining seconds: ${_remainingSeconds.value}');
       } else {
-        print('Countdown cancel');
         timer.cancel();
         _timer = null;
       }

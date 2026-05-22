@@ -8,8 +8,9 @@ import 'package:flutter_proj/store/global_store.dart';
 class ImApi {
   /// 上传文件
   Future<T> uploadFile<T>(String filePath) {
-    Map<String, dynamic> params = {};
-    params['file'] = MultipartFile.fromFileSync(filePath);
+    Map<String, dynamic> params = {
+      'file': MultipartFile.fromFileSync(filePath),
+    };
     return xtmHttpApi.post(
       HttpOptions(
         requestBaseUrl: HTTPConfig.chatServiceDomain,
@@ -22,9 +23,10 @@ class ImApi {
 
   /// 查询客服未读消息
   Future<T> getChatMessageUnReadByLastDatetime<T>(String recentTime) {
-    Map<String, dynamic> params = {};
-    params['driverNo'] = xtmGlobalStore.auth.userInfo.userID;
-    params['recentTime'] = recentTime;
+    Map<String, dynamic> params = {
+      'driverNo': xtmGlobalStore.auth.userInfo.userID,
+      'recentTime': recentTime
+    };
     return xtmHttpApi.post(
       HttpOptions(
         requestBaseUrl: HTTPConfig.chatServiceDomain,

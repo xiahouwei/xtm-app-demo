@@ -1,15 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_proj/theme/xtm_color.dart';
+import 'package:flutter_proj/theme/theme_notifier.dart';
 import 'package:flutter_proj/xtmdesign_component/xtm_design.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
   HomePage({Key key}) : super(key: key);
+
   @override
   State<HomePage> createState() => HomePageState();
 }
 
 class HomePageState extends State<HomePage> {
-  int count = 1;
+  ThemeNotifier _theme;
+
   @override
   void initState() {
     super.initState();
@@ -17,23 +20,27 @@ class HomePageState extends State<HomePage> {
 
   @override
   Widget build(BuildContext context) {
+    _theme = Provider.of<ThemeNotifier>(context, listen: true);
     return Scaffold(
-      backgroundColor: XtmColor.bgColor,
-      appBar: XtmAppBar(title: '首页'),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
-        child: buildContentWidget(),
+      appBar: XtmAppBar(
+        title: '首页',
+        backgroundColor: _theme.appBarColor,
+        elevation: 0,
+        leftWidget: SizedBox.shrink(),
+      ),
+      body: XtmAppBody(
+        backgroundColor: _theme.pageBgColor,
+        child: Stack(
+          children: [],
+        ),
       ),
     );
   }
 
-  Widget buildContentWidget() {
-    return Text('首页-第${count}次进入');
-  }
+  void appRefresh() {}
 
-  void appRefresh() {
-    setState(() {
-      count++;
-    });
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

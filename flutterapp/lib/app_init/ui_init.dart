@@ -60,7 +60,7 @@ class UiInit {
       enableLoadingWhenFailed: true,
       //在加载失败的状态下,用户仍然可以通过手势上拉来触发加载更多
       hideFooterWhenNotFull: false,
-      child: app,
+      child: XtmAppKeyboardDismiss(child: app),
     );
   }
 

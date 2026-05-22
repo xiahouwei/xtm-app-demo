@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_proj/theme/xtm_color.dart';
-import 'package:flutter_proj/widgets/lazy_indexed_stack.dart';
-import 'package:flutter_proj/widgets/message_bubble.dart';
-import 'package:flutter_proj/xtmdesign_component/src/components/toast/xtm_toast.dart';
+import 'package:flutter_proj/pages/business/business_page.dart';
 import 'package:flutter_proj/pages/home/home_page.dart';
-import 'package:flutter_proj/pages/waybill/waybill_page.dart';
 import 'package:flutter_proj/pages/message/message_page.dart';
 import 'package:flutter_proj/pages/mine/mine_page.dart';
+import 'package:flutter_proj/theme/xtm_color.dart';
+import 'package:flutter_proj/widgets/lazy_indexed_stack.dart';
+import 'package:flutter_proj/xtmdesign_component/src/components/toast/xtm_toast.dart';
+import 'package:flutter_proj/xtmdesign_component/xtm_design.dart';
 
 /// 基座页面
 class MainPage extends StatefulWidget {
@@ -18,14 +18,15 @@ class _MainPageState extends State<MainPage> {
   int _bottomBarIndex = 0;
   DateTime _lastPressedTime;
   final _homeKey = GlobalKey<HomePageState>();
-  final _waybillKey = GlobalKey<WaybillPageState>();
+  final _businessKey = GlobalKey<BusinessPageState>();
   final _messageKey = GlobalKey<MessagePageState>();
   final _mineKey = GlobalKey<MinePageState>();
-  int _msgCount = 0;
+
   @override
   void initState() {
     super.initState();
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -39,7 +40,7 @@ class _MainPageState extends State<MainPage> {
           index: _bottomBarIndex,
           children: [
             HomePage(key: _homeKey),
-            WaybillPage(key: _waybillKey),
+            BusinessPage(key: _businessKey),
             MessagePage(key: _messageKey),
             MinePage(key: _mineKey),
           ],
@@ -58,16 +59,16 @@ class _MainPageState extends State<MainPage> {
                 ),
                 _buildTabItem(
                   index: 1,
-                  iconPath: 'assets/icons/bottom_bar/icon_order.png',
-                  selectedIconPath: 'assets/icons/bottom_bar/icon_order_select.png',
-                  label: '运单',
+                  iconPath: 'assets/icons/bottom_bar/icon_business.png',
+                  selectedIconPath: 'assets/icons/bottom_bar/icon_business_select.png',
+                  label: '业务',
                 ),
                 _buildTabItem(
-                    index: 2,
-                    iconPath: 'assets/icons/bottom_bar/icon_msg.png',
-                    selectedIconPath: 'assets/icons/bottom_bar/icon_msg_select.png',
-                    label: '消息',
-                    msgCount: _msgCount),
+                  index: 2,
+                  iconPath: 'assets/icons/bottom_bar/icon_msg.png',
+                  selectedIconPath: 'assets/icons/bottom_bar/icon_msg_select.png',
+                  label: '消息',
+                ),
                 _buildTabItem(
                   index: 3,
                   iconPath: 'assets/icons/bottom_bar/icon_mine.png',
@@ -83,7 +84,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   Widget _buildTabItem(
-      {int index, String iconPath, String selectedIconPath, String label, int msgCount}) {
+      {int index, String iconPath, String selectedIconPath, String label}) {
     return Expanded(
       child: InkWell(
         onTap: () {
@@ -95,7 +96,7 @@ class _MainPageState extends State<MainPage> {
               _homeKey.currentState?.appRefresh();
               break;
             case 1:
-              _waybillKey.currentState?.appRefresh();
+              _businessKey.currentState?.appRefresh();
               break;
             case 2:
               _messageKey.currentState?.appRefresh();
@@ -118,7 +119,6 @@ class _MainPageState extends State<MainPage> {
                 _buildItemText(index: index, label: label),
               ],
             ),
-            _buildBubble(msgCount),
           ],
         ),
       ),
@@ -135,18 +135,6 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
-  Widget _buildBubble(int msgCount) {
-    return Visibility(
-      visible: msgCount != null && msgCount > 0,
-      child: Positioned(
-        top: 0,
-        right: 14,
-        child: MessageBubble(
-          messageCount: msgCount,
-        ),
-      ),
-    );
-  }
 
   bool _exitApp() {
     if (_lastPressedTime == null ||

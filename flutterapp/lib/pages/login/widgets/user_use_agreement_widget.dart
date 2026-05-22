@@ -13,17 +13,24 @@ class UserUseAgreementWidget extends StatefulWidget {
 }
 
 class _UserUseAgreementWidgetState extends State<UserUseAgreementWidget> {
-  TapGestureRecognizer _privateProtocolRecognizer;
+  TapGestureRecognizer _userAgreementRecognizer = TapGestureRecognizer()
+    ..onTap = () {
+      H5PageManager.navigator2UserAgreementPage();
+    };
+  TapGestureRecognizer _privacyAgreementRecognizer = TapGestureRecognizer()
+    ..onTap = () {
+      H5PageManager.navigator2PrivacyAgreementPage();
+    };
+  TapGestureRecognizer _platformTransactionRulesRecognizer = TapGestureRecognizer()
+    ..onTap = () {
+      H5PageManager.navigator2PlatformTransactionRulesPage();
+    };
 
   bool _isCheckAgreement = false;
 
   @override
   void initState() {
     super.initState();
-    _privateProtocolRecognizer = TapGestureRecognizer()
-      ..onTap = () {
-        H5PageManager.navigator2PrivacyAgreementPage();
-      };
     _isCheckAgreement = widget.isSelected;
   }
 
@@ -41,7 +48,6 @@ class _UserUseAgreementWidgetState extends State<UserUseAgreementWidget> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             dotBtn(),
-            Text('我已阅读并同意', style: TextStyle(color: Colors.white, fontSize: 13)),
             Expanded(child: displayProtocol()),
           ],
         ));
@@ -72,10 +78,21 @@ class _UserUseAgreementWidgetState extends State<UserUseAgreementWidget> {
       text: TextSpan(
         style: TextStyle(height: 1.5, fontSize: 13),
         children: [
+          TextSpan(text: '我已阅读并同意', style: TextStyle(color: Colors.white, fontSize: 13)),
+          TextSpan(
+            text: '《用户使用协议》',
+            style: TextStyle(color: Color(0xFF21CAFC), fontSize: 13),
+            recognizer: _userAgreementRecognizer,
+          ),
           TextSpan(
             text: '《隐私政策》',
             style: TextStyle(color: Color(0xFF21CAFC), fontSize: 13),
-            recognizer: _privateProtocolRecognizer,
+            recognizer: _privacyAgreementRecognizer,
+          ),
+          TextSpan(
+            text: '《平台交易规则协议》',
+            style: TextStyle(color: Color(0xFF21CAFC), fontSize: 13),
+            recognizer: _platformTransactionRulesRecognizer,
           ),
         ],
       ),
@@ -84,7 +101,9 @@ class _UserUseAgreementWidgetState extends State<UserUseAgreementWidget> {
 
   @override
   void dispose() {
-    _privateProtocolRecognizer.dispose();
+    _userAgreementRecognizer.dispose();
+    _privacyAgreementRecognizer.dispose();
+    _platformTransactionRulesRecognizer.dispose();
     super.dispose();
   }
 }

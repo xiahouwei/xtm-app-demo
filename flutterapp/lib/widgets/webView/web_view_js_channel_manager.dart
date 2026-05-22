@@ -112,7 +112,6 @@ class WebViewJsChannelManager {
       "deviceType": deviceType,
     };
     String baseInfoStr = jsonEncode(dict);
-    print(baseInfoStr);
     return baseInfoStr;
   }
 
@@ -137,7 +136,6 @@ class WebViewJsChannelManager {
 
   void flutterRecordStopHandler(JavascriptMessage message) {
     xtmDevice.record.stop().then((value) async {
-      print(value);
       xtmApi.im.uploadFile(value).then((value) {
         String infoStr = jsonEncode(value);
         _controller.evaluateJavascript("webviewChatCallback.recoderCallback('$infoStr')");

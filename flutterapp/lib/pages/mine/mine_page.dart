@@ -1,16 +1,20 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_proj/theme/xtm_color.dart';
+import 'package:provider/provider.dart';
+
+import 'package:flutter_proj/theme/theme_notifier.dart';
 import 'package:flutter_proj/xtmdesign_component/xtm_design.dart';
-import 'package:flutter_proj/common/function/auth_manager.dart';
+
 
 class MinePage extends StatefulWidget {
   MinePage({Key key}) : super(key: key);
+
   @override
   State<MinePage> createState() => MinePageState();
 }
 
 class MinePageState extends State<MinePage> {
-  int count = 1;
+  ThemeNotifier _theme;
+
   @override
   void initState() {
     super.initState();
@@ -18,33 +22,27 @@ class MinePageState extends State<MinePage> {
 
   @override
   Widget build(BuildContext context) {
+    _theme = Provider.of<ThemeNotifier>(context, listen: true);
     return Scaffold(
-      backgroundColor: XtmColor.bgColor,
-      appBar: XtmAppBar(title: '消息'),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
-        child: buildContentWidget(),
+      appBar: XtmAppBar(
+        title: '我的',
+        backgroundColor: _theme.appBarColor,
+        elevation: 0,
+      ),
+      body: XtmAppBody(
+        backgroundColor: _theme.pageBgColor,
+        child: Stack(
+          children: [
+          ],
+        ),
       ),
     );
   }
+  void appRefresh() {}
 
-  Widget buildContentWidget() {
-    return Column(
-      children: [
-        Text('消息-第${count}次进入'),
-        XtmTextButton(
-          text: '退出登录',
-          onPressed: () {
-            AuthManager.clearToLogin();
-          },
-        ),
-      ],
-    );
-  }
 
-  void appRefresh() {
-    setState(() {
-      count++;
-    });
+  @override
+  void dispose() {
+    super.dispose();
   }
 }

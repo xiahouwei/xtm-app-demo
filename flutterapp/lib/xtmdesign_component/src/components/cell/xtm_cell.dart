@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_proj/xtmdesign_component/src/xtm_design_config.dart';
 
 /// 默认带分割线，右侧带箭头的单元格组件
 ///
@@ -24,6 +25,10 @@ import 'package:flutter/material.dart';
 ///    onCellTap: () {},
 ///  ),
 /// ```
+
+class _XtmCellConstants {
+  static const String EMPTY_TEXT = '';
+}
 
 class XtmCell extends StatelessWidget {
   /// 左边label
@@ -64,11 +69,11 @@ class XtmCell extends StatelessWidget {
 
   XtmCell({
     Key key,
-    this.label,
+    this.label = _XtmCellConstants.EMPTY_TEXT,
     this.value,
     this.isRequired = false,
     this.showDivider = true,
-    this.showRightArrow = true,
+    this.showRightArrow = false,
     this.leftWidget,
     this.rightWidget,
     this.horizontalPadding = 10.0,
@@ -127,8 +132,8 @@ class XtmCell extends StatelessWidget {
           : SizedBox(),
       SizedBox(width: 3.0),
       Text(
-        label,
-        style: labelStyle ?? TextStyle(fontSize: 15.0, color: Colors.black87),
+        label ?? _XtmCellConstants.EMPTY_TEXT,
+        style: labelStyle ?? TextStyle(fontSize: 14.0, color: xtmDesignConfig.subTextColor),
       ),
     ];
   }
@@ -137,11 +142,11 @@ class XtmCell extends StatelessWidget {
     return [
       Expanded(
         child: Text(
-          value ?? '',
+          value ?? _XtmCellConstants.EMPTY_TEXT,
           maxLines: 2,
           overflow: TextOverflow.ellipsis,
           textAlign: TextAlign.right,
-          style: valueStyle ?? TextStyle(fontSize: 15.0, color: Colors.black87),
+          style: valueStyle ?? TextStyle(fontSize: 14.0, color: xtmDesignConfig.mainTextColor),
         ),
       ),
       SizedBox(width: 5.0),

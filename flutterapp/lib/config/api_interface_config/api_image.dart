@@ -6,10 +6,11 @@ import 'package:flutter_proj/network/http_manager.dart';
 class ImageApi {
   /// 上传文件
   Future<T> uploadFile<T>(String imagePath, String businessSource) {
-    Map<String, dynamic> params = {};
-    params['file'] = MultipartFile.fromFileSync(imagePath);
-    params['businessSource'] = businessSource;
-    params['agentCode'] = 'zhgt';
+    Map<String, dynamic> params = {
+      'file': MultipartFile.fromFileSync(imagePath),
+      'businessSource': businessSource,
+      'agentCode': 'zhgt',
+    };
     return xtmHttpApi.post(
       HttpOptions(
         path: 'tms-file/files/upload',

@@ -26,7 +26,10 @@ class LocalStorage {
   static Future<int> getInt(String key, int defaultValue) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     var data = prefs.get(key);
-    return data;
+    if (data != null) {
+      return data;
+    }
+    return defaultValue;
   }
 
   static Future<double> getDouble(String key, double defaultValue) async {

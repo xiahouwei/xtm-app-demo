@@ -57,6 +57,9 @@ enum ImageTypeEnum {
 
   /// 头像
   USER_HEAD_IMG,
+
+  /// 公司logo
+  COMPANY_LOGO,
 }
 
 /// 图片识别类型
@@ -140,7 +143,9 @@ class ImageConstants {
       case ImageTypeEnum.BUSINESS_LICENSE_NO_CLICK:
         return 'assets/images/placeholder/placeholder_business_license_no_click.png';
       case ImageTypeEnum.USER_HEAD_IMG:
-        return 'assets/images/mine/mine_avatar_icon.png';
+        return 'assets/images/mine/image_mine_portrait.png';
+      case ImageTypeEnum.COMPANY_LOGO:
+        return 'assets/images/home/image_company_placeholder.png';
       case ImageTypeEnum.DEFAULT_IMG:
         return 'assets/images/placeholder/placeholder_default.png';
       case ImageTypeEnum.DEFAULT_IMG_NO_CLICK:

@@ -36,7 +36,7 @@ class ImageUpload extends StatefulWidget {
     this.isRequired = false,
     this.imgDesc,
     this.imageType,
-    this.businessSource = UploadBusSourceConstant.VEHICLE_MANAGE,
+    this.businessSource = UploadBusSourceConstant.APP_SHIPPER_BUSINESS,
     this.onImageUploaded,
     this.errorImgPath,
     this.isOcr = false,
@@ -128,10 +128,7 @@ class _ImageUploadState extends State<ImageUpload> {
         return;
       }
       await xtmApi.image
-          .imageOcr(
-              imagePath: imagePath,
-              ocrType: _ocrType,
-              idSide: ImageConstants.getImageSide(widget.imageType))
+          .imageOcr(imagePath: imagePath, ocrType: _ocrType, idSide: ImageConstants.getImageSide(widget.imageType))
           .then((res) {
         widget.onOcrSuccess(res);
       });

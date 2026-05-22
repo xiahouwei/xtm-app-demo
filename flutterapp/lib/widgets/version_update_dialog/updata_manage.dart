@@ -47,7 +47,6 @@ class UpDataManage {
     if (_apkFile != null && _apkFile.path != null) {
       String _apkFilePath = _apkFile.path;
       if (_apkFilePath.isEmpty) {
-        print('make sure the apk file is set');
         _downloadCallback(callback, false);
         return;
       }
@@ -55,10 +54,8 @@ class UpDataManage {
       InstallPlugin.installApk(_apkFilePath, AppConfig.APP_ANDROID_ID).then((result) {
         _downloadCallback(callback, true);
         Navigator.pop(context);
-        print('install apk $result');
       }).catchError((error) {
         _downloadCallback(callback, false);
-        print('install apk error: $error');
       });
     }
   }

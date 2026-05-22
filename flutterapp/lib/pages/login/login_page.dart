@@ -1,10 +1,14 @@
 import 'dart:async';
+import 'dart:io';
 
+import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_proj/common/h5_page/h5_url_manage.dart';
 import 'package:flutter_proj/config/api_interface_config/index.dart';
 import 'package:flutter_proj/constants/login_constants.dart';
 import 'package:flutter_proj/device/index.dart';
+import 'package:flutter_proj/models/login/current_company_model.dart';
+import 'package:flutter_proj/models/login/user_company_model.dart';
 import 'package:flutter_proj/models/login/user_info_model.dart';
 import 'package:flutter_proj/network/http_config.dart';
 import 'package:flutter_proj/routes/app_router_constant.dart';
@@ -31,42 +35,35 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
   String versionCode = '';
   bool _agreementSelected = false;
   bool isShowSecretDialog = true;
-
-  GlobalKey<FormState> _formKey;
-  GlobalKey<FormFieldState> _mobileKey;
-  TextEditingController _mobileController;
-  TextEditingController _pwdController;
-  TextEditingController _smsCodeController;
-
-  CountdownTimerUtil _countdownTimer;
-
-  /// 背景动画控制器
+  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  GlobalKey<FormFieldState> _mobileKey = GlobalKey<FormFieldState>();
+  TextEditingController _mobileController = TextEditingController();
+  TextEditingController _pwdController = TextEditingController();
+  TextEditingController _smsCodeController = TextEditingController();
+  CountdownTimerUtil _countdownTimer = CountdownTimerUtil();
   AnimationController _animationController;
   Animation<double> _animation;
+  DeviceInfoPlugin deviceInfo = DeviceInfoPlugin();
+  int hardwareInformationMaxLength = 50;
 
   @override
   void initState() {
     super.initState();
-    _formKey = GlobalKey<FormState>();
-    _mobileKey = GlobalKey<FormFieldState>();
-    _mobileController = TextEditingController();
-    _pwdController = TextEditingController();
-    _smsCodeController = TextEditingController();
-    _countdownTimer = CountdownTimerUtil();
-
-    // 初始化动画
-    _animationController = AnimationController(
-      duration: const Duration(seconds: 10),
-      vsync: this,
-    )..repeat(reverse: true);
-    _animation = Tween<double>(begin: -1.0, end: 1.0).animate(_animationController);
-
+    initBgAnimation();
     initInputDefaultValue();
     initVersionCode();
     checkVersion();
     WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
       agreementHandler();
     });
+  }
+
+  void initBgAnimation() {
+    _animationController = AnimationController(
+      duration: const Duration(seconds: 20),
+      vsync: this,
+    )..repeat(reverse: true);
+    _animation = Tween<double>(begin: -1.0, end: 1.0).animate(_animationController);
   }
 
   void checkVersion() {
@@ -76,11 +73,12 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
   void initInputDefaultValue() {
     String userName = xtmGlobalStore.auth.userName;
     String password = xtmGlobalStore.auth.password;
-    _mobileController.text = userName;
-    if (_loginType == LoginConstants.LOGIN_TYPE_MOBILE) {
-      _pwdController.text = password;
-    }
-    setState(() {});
+    setState(() {
+      _mobileController.text = userName;
+      if (_loginType == LoginConstants.LOGIN_TYPE_MOBILE) {
+        _pwdController.text = password;
+      }
+    });
   }
 
   void initVersionCode() async {
@@ -107,12 +105,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
       body: Stack(
         children: [
           _buildLoginBg(),
-          GestureDetector(
-            child: buildContentWidget(),
-            onTap: () {
-              FocusScope.of(context).unfocus();
-            },
-          ),
+          buildContentWidget(),
         ],
       ),
     );
@@ -129,7 +122,7 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
             enableRotation: false,
             disableGestures: true,
             imageProvider: AssetImage('assets/images/login/login_bg.png'),
-            initialScale: 0.48,
+            initialScale: 0.5,
           ),
         );
       },
@@ -140,11 +133,6 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
     return Column(
       children: [
         Expanded(child: displayBodyContent()),
-        Image.asset(
-          'assets/images/login/login_bottom_name.png',
-          width: 300,
-          fit: BoxFit.fitWidth,
-        ),
         buildVersionText(),
         SizedBox(height: 10),
       ],
@@ -158,15 +146,8 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
         key: _formKey,
         child: Column(
           children: [
-            SizedBox(height: 100),
-            Image.asset('assets/images/login/login_logo.png', width: 60, fit: BoxFit.fitWidth),
-            SizedBox(height: 10),
-            Container(
-              alignment: Alignment.centerLeft,
-              width: MediaQuery.of(context).size.width,
-              child: Image.asset('assets/images/login/login_company.png',
-                  height: 60, fit: BoxFit.fitHeight),
-            ),
+            SizedBox(height: 80),
+            _buildLoginTitle(),
             SizedBox(height: 20),
             _buildLoginType(),
             SizedBox(height: 10),
@@ -193,6 +174,55 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
     );
   }
 
+  Widget _buildLoginTitle() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Image.asset(
+          'assets/images/login/image_login_logo.png',
+          height: 40,
+          fit: BoxFit.fitHeight,
+        ),
+        const SizedBox(height: 40),
+        Image.asset(
+          'assets/images/login/image_login_title.png',
+          height: 45,
+          fit: BoxFit.fitHeight,
+        ),
+        Align(
+          alignment: Alignment.centerRight,
+          child: Padding(
+            padding: const EdgeInsets.only(right: 2),
+            child: Image.asset(
+              'assets/images/login/image_login_sub_title.png',
+              height: 28,
+              fit: BoxFit.fitHeight,
+            ),
+          ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Image.asset(
+              'assets/images/login/image_login_des.png',
+              height: 25,
+              fit: BoxFit.fitHeight,
+            ),
+            Transform.translate(
+              offset: const Offset(0, 1),
+              child: Image.asset(
+                'assets/images/login/image_login_des_icon.png',
+                width: 20,
+                fit: BoxFit.fitHeight,
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
   Widget _buildLoginType() {
     return Row(
       children: [
@@ -201,7 +231,6 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
             setState(() {
               _loginType = LoginConstants.LOGIN_TYPE_MOBILE;
               _formKey.currentState.reset();
-              FocusScope.of(context).unfocus();
             });
           },
           child: Text(
@@ -218,7 +247,6 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
             setState(() {
               _loginType = LoginConstants.LOGIN_TYPE_SMS;
               _formKey.currentState.reset();
-              FocusScope.of(context).unfocus();
             });
           },
           child: Text(
@@ -295,7 +323,6 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
     if (receiveCount != null && receiveCount > 0 && receiveCount < 100) {
       XtmToast.info('正在下载中，请稍后再试，已下载$receiveCount%');
     } else {
-      FocusManager.instance.primaryFocus.unfocus();
       loginAction();
     }
   }
@@ -316,7 +343,6 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
     if (!_mobileKey.currentState.validate()) {
       return;
     }
-    FocusScope.of(context).unfocus();
     _isShowPicCode();
   }
 
@@ -371,15 +397,31 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
     if (!_formKey.currentState.validate()) {
       return;
     }
+    String hardwareInformation = await getDeviceInfo();
     xtmGlobalStore.auth.setToken(HTTPConfig.baseToken);
-    HTTPConfig.updateDomainByIos(_mobileController.text.trim());
     Map<String, dynamic> loginParam = {};
     loginParam['mobile'] = _mobileController.text.trim();
     loginParam['password'] = _pwdController.text.trim();
     loginParam['messageCode'] = _smsCodeController.text.trim();
     loginParam['loginTypeCode'] = _loginType;
-    loginParam['hardwareInformation'] = '';
+    loginParam['hardwareInformation'] = hardwareInformation;
     xtmApi.auth.loginByMobile(params: loginParam).then((res) => handleToken(res));
+  }
+
+  Future<String> getDeviceInfo() async {
+    String hardwareInformation = '';
+    if (Platform.isAndroid) {
+      AndroidDeviceInfo androidInfo = await deviceInfo.androidInfo;
+      hardwareInformation = '${androidInfo.manufacturer}__${androidInfo.model}';
+    } else if (Platform.isIOS) {
+      IosDeviceInfo iosInfo = await deviceInfo.iosInfo;
+      hardwareInformation =
+          '${iosInfo.model}__${iosInfo.utsname.machine}__${iosInfo.systemName}__${iosInfo.systemVersion}';
+    }
+    if (hardwareInformation.length > hardwareInformationMaxLength) {
+      return hardwareInformation.substring(0, hardwareInformationMaxLength);
+    }
+    return hardwareInformation;
   }
 
   void handleToken(Map<String, dynamic> res) async {
@@ -387,10 +429,45 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
     if (token != null) {
       xtmGlobalStore.auth.setToken(token);
     }
-    xtmGlobalStore.auth.setIsLogin(true);
     handleUserInfo(res['body']['content']['userInfo']);
-    // bindGpushClientId();
-    loginStatusSetting();
+    chooseCurrentCompany().then((value) {
+      xtmGlobalStore.auth.setIsLogin(true);
+      bindGpushClientId();
+      loginStatusSetting();
+    });
+  }
+
+  Future<void> chooseCurrentCompany() {
+    return AsyncUtils.PromiseFunction<String>((promise) async {
+      xtmApi.auth.getManageCompanyList().then((res) async {
+        UserCompanyListModel response = UserCompanyListModel.fromJson(res);
+        List<UserCompanyModel> companyList = response.list;
+        if (companyList.isEmpty) {
+          CompanyInfo defaultCompany = xtmGlobalStore.auth.userInfo.companyInfo;
+          xtmGlobalStore.auth.setCurrentCompanyId(defaultCompany.companyID);
+          xtmGlobalStore.auth.setCurrentCompanyInfo(
+            CurrentCompanyModel.fromJson(defaultCompany.toJson()),
+          );
+          promise.complete();
+        }
+        if (companyList.length == 1) {
+          xtmGlobalStore.auth.setCurrentCompanyId(companyList.first.id);
+          await _getSelectCompanyInfo(companyList.first.id);
+          promise.complete();
+        }
+        List<String> companyNameList = companyList.map((item) => item.name).toList();
+        XtmBottomSheet.showBottomPicker(
+          context,
+          title: '选择登录企业',
+          data: companyNameList,
+          selectItem: '',
+        ).then((index) async {
+          xtmGlobalStore.auth.setCurrentCompanyId(companyList[index].id);
+          await _getSelectCompanyInfo(companyList[index].id);
+          promise.complete();
+        });
+      });
+    });
   }
 
   void handleUserInfo(Map<String, dynamic> res) {
@@ -404,9 +481,20 @@ class _LoginPageState extends State<LoginPage> with TickerProviderStateMixin {
     }
   }
 
-  // void bindGpushClientId() {
-  //   xtmApi.auth.bindClientId();
-  // }
+  // 获取所选企业信息
+  Future<void> _getSelectCompanyInfo(String companyId) {
+    return AsyncUtils.PromiseFunction<String>((promise) async {
+      xtmApi.auth.getCurrentCompanyInfo(companyId).then((value) {
+        CurrentCompanyModel companyInfo = CurrentCompanyModel.fromJson(value);
+        xtmGlobalStore.auth.setCurrentCompanyInfo(companyInfo);
+        promise.complete();
+      });
+    });
+  }
+
+  void bindGpushClientId() {
+    xtmApi.auth.bindClientId();
+  }
 
   void loginStatusSetting() {
     if (_loginType == LoginConstants.LOGIN_TYPE_SMS) {

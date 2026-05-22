@@ -129,7 +129,7 @@ class _XtmInputState extends State<XtmInput> {
             child: widget.prefix ?? SizedBox(),
           ),
           prefixIconConstraints: BoxConstraints(minWidth: 0),
-          contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 14),
+          contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 4),
           fillColor: Colors.white,
           filled: true,
           hintText: widget.useHint ? '请输入${widget.label}' : null,
@@ -146,35 +146,39 @@ class _XtmInputState extends State<XtmInput> {
             borderRadius: BorderRadius.circular(5),
             borderSide: BorderSide(color: widget.borderColor ?? xtmDesignConfig.mainColor),
           ),
-          suffixIcon: Container(
-            padding: const EdgeInsets.only(right: 10),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                widget.clear
-                    ? ValueListenableBuilder(
-                        valueListenable: widget.controller,
-                        builder: (context, value, child) {
-                          return value.text.isNotEmpty
-                              ? GestureDetector(
-                                  child: Container(
-                                    padding: const EdgeInsets.all(4),
-                                    child: Icon(Icons.cancel, size: 20, color: Colors.grey),
-                                  ),
-                                  onTap: () {
-                                    widget.controller.clear();
-                                  },
-                                )
-                              : SizedBox();
-                        },
-                      )
-                    : SizedBox(),
-                widget.inputType == TextInputType.visiblePassword ? _showPwd() : SizedBox(),
-                widget.suffix != null ? widget.suffix : SizedBox(),
-              ],
-            ),
-          ),
+          suffixIcon: (widget.clear ||
+                  widget.inputType == TextInputType.visiblePassword ||
+                  widget.suffix != null)
+              ? Container(
+                  padding: const EdgeInsets.only(right: 10),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      widget.clear
+                          ? ValueListenableBuilder(
+                              valueListenable: widget.controller,
+                              builder: (context, value, child) {
+                                return value.text.isNotEmpty
+                                    ? GestureDetector(
+                                        child: Container(
+                                          padding: const EdgeInsets.all(4),
+                                          child: Icon(Icons.cancel, size: 20, color: Colors.grey),
+                                        ),
+                                        onTap: () {
+                                          widget.controller.clear();
+                                        },
+                                      )
+                                    : SizedBox();
+                              },
+                            )
+                          : SizedBox(),
+                      widget.inputType == TextInputType.visiblePassword ? _showPwd() : SizedBox(),
+                      widget.suffix != null ? widget.suffix : SizedBox(),
+                    ],
+                  ),
+                )
+              : null,
         ),
         keyboardType: widget.inputType,
         obscureText: _obscureText,

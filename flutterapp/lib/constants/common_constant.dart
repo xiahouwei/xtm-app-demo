@@ -1,25 +1,35 @@
+/// 常用常量
 class CommonConstant {
   /// 每页默认加载的条数
   static const int PAGE_SIZE = 10;
 
-  /// 角色
-  static const int ROLE_DRIVER = 1;
+  /// 普通用户（未认证用户）
+  static int NORMAL_USER = 2541080;
+
+  /// 托运人
+  static const int SHIPPER = 2541010;
+
+  /// 托运代办人
+  static const int SHIPPER_AGENT = 2541060;
+}
+
+/// 认证状态
+class CertifyStatusConstant {
+  /// 0未认证
+  static const int UN_CERTIFY = 0;
+
+  /// 1已认证
+  static const int CERTIFIED = 1;
 }
 
 /// 文件上传业务源
 class UploadBusSourceConstant {
-  /// 车辆管理相关
-  static const String VEHICLE_MANAGE = 'BASICWEB_VEHICLE';
+  /// 业务
+  static const String APP_SHIPPER_BUSINESS = 'APP_SHIPPER_BUSINESS';
 
-  /// 用户头像
-  static const String HEAD_PHOTO = 'HEAD_PHOTO';
+  /// 公司
+  static const String APP_SHIPPER_COMPANY = 'APP_SHIPPER_COMPANY';
 
-  /// 企业认证
-  static const String COMPANY_AUTH = 'CUSTOMER_ARCHIVE';
-
-  /// 为他人注册司机
-  static const String REGISTER_DRIVER_FOR_OTHER = 'REGISTER_DRIVER_FOR_OTHER';
-
-  /// 创建运力单元签署协议
-  static const String TCU_FILE = 'TCU_FILE';
+  /// 用户
+  static const String APP_SHIPPER_USER = 'APP_SHIPPER_USER';
 }

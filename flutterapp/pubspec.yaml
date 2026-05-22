@@ -4,7 +4,7 @@ description: XTM-APP-模版
 publish_to: 'none'
 
 # version: 1.0.0   #release
-version: 3.10.6   #dev
+version: 3.10.8   #dev
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -78,7 +78,6 @@ dependencies:
   qr_flutter: 4.0.0
   # 滑动操作
   flutter_slidable: 1.2.0
-  
 
   # 调试工具
   flutter_ume: 1.1.0
@@ -100,7 +99,7 @@ flutter:
     - assets/icons/bottom_bar/
     - assets/images/placeholder/
     - assets/images/version_update/
+    - assets/images/image/
     - lib/xtmdesign_component/assets/images/
     # 业务资源
     - assets/images/login/
-

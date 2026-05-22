@@ -66,7 +66,10 @@ class XtmBottomSheet {
         );
       },
     );
-    return Future.value(selectIndex);
+    if (selectIndex != null) {
+      return Future.value(selectIndex);
+    }
+    return Future.error('取消');
   }
 }
 

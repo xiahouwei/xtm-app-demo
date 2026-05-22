@@ -1,3 +1,4 @@
+import 'package:flutter_proj/models/login/current_company_model.dart';
 import 'package:flutter_proj/models/login/user_info_model.dart';
 
 class AuthGlobalState {
@@ -28,6 +29,12 @@ class AuthGlobalState {
   /// 个推客户端id
   String clientId;
 
+  /// 当前管理的企业
+  String currentCompanyId;
+
+  /// 当前管理企业信息
+  CurrentCompanyModel currentCompany;
+
   AuthGlobalState({
     this.isLogin,
     this.token,
@@ -38,5 +45,7 @@ class AuthGlobalState {
     this.showSecretDialog,
     this.platformName,
     this.clientId,
+    this.currentCompanyId,
+    this.currentCompany,
   });
 }

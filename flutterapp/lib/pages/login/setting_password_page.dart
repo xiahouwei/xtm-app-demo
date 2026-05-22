@@ -41,10 +41,11 @@ class _SettingPasswordPageState extends State<SettingPasswordPage> {
       XtmToast.warn('两次密码输入不一致');
       return;
     }
-    Map params = {};
-    params['userId'] = widget.userId;
-    params['password'] = _pwsStr;
-    params['pw'] = _pwsStr;
+    Map params = {
+      'userId': widget.userId,
+      'password': _pwsStr,
+      'pw': _pwsStr,
+    };
     xtmApi.auth.setPassword(params: params).then((res) {
       XtmToast.success('密码设置成功');
       Future.delayed(Duration(seconds: 1)).then((value) => changeRootPageAndLoginStatus());

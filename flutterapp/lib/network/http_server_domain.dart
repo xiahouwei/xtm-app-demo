@@ -12,7 +12,7 @@ enum ServerDomainType { RELEASE, PRE, DEV, SIT3, QA }
 
 class HttpServerDomain {
   static final List<DomainModel> _releaseEnv = [
-    DomainModel('河北纵横集团丰南钢铁有限公司', 'https://www.tjzwzn.cn'),
+    DomainModel('release', 'https://www.tjzwzn.cn'),
   ];
 
   static final List<DomainModel> _preEnv = [
@@ -20,7 +20,7 @@ class HttpServerDomain {
   ];
 
   static final List<DomainModel> _devEnv = [
-    DomainModel('dev-河北纵横丰南', 'https://dev-9ms.fengnansteel.com'),
+    DomainModel('dev', 'https://dev.tjzwzn.cn/tms'),
   ];
 
   static final List<DomainModel> _sit3Env = [

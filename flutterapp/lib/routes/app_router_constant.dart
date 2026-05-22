@@ -4,4 +4,5 @@ class AppRouterNameConstant {
 
   /// 首页基座页面
   static const String MAIN = 'main';
+
 }

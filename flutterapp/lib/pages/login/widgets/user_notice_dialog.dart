@@ -66,11 +66,29 @@ class UserNoticeDialog {
         text: TextSpan(children: [
       _factoryTextSpan(textStr: '    使用前，请您先阅读'),
       TextSpan(
+        text: '《用户协议》',
+        style: TextStyle(color: highLightColor, fontWeight: fontWeight, fontSize: fontSize),
+        recognizer: TapGestureRecognizer()
+          ..onTap = () {
+            H5PageManager.navigator2UserAgreementPage();
+          },
+      ),
+      _factoryTextSpan(textStr: '、'),
+      TextSpan(
         text: '《隐私政策》',
         style: TextStyle(color: highLightColor, fontWeight: fontWeight, fontSize: fontSize),
         recognizer: TapGestureRecognizer()
           ..onTap = () {
             H5PageManager.navigator2PrivacyAgreementPage();
+          },
+      ),
+      _factoryTextSpan(textStr: '、'),
+      TextSpan(
+        text: '《平台交易规则协议》',
+        style: TextStyle(color: highLightColor, fontWeight: fontWeight, fontSize: fontSize),
+        recognizer: TapGestureRecognizer()
+          ..onTap = () {
+            H5PageManager.navigator2PlatformTransactionRulesPage();
           },
       ),
       _factoryTextSpan(textStr: '，并充分了解以下权限申请情况：'),

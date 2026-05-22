@@ -12,7 +12,7 @@ class ApiVersionIosConstants {
   static const PRE = '3.10.9';
   static const DEV = '1.0.0';
   static const SIT3 = '3.10.6';
-  static const QA = '3.10.6';
+  static const QA = '3.10.10';
 }
 
 class EnvConfig {
@@ -89,16 +89,16 @@ class EnvConfig {
       apiVersionIOS: ApiVersionIosConstants.SIT3,
       dioKit: UME_KIT.OPEN,
       umeKit: UME_KIT.CLOSE,
-      apiLog: false,
+      apiLog: true,
     ),
     'slw': EnvConfig(
-      serverDomainType: ServerDomainType.PRE,
-      chatDomain: ChatWebDomainConstants.PRE,
-      chatServiceDomain: ChatServerDomainConstants.PRE,
-      apiVersionIOS: ApiVersionIosConstants.PRE,
-      dioKit: UME_KIT.CLOSE,
+      serverDomainType: ServerDomainType.QA,
+      chatDomain: ChatWebDomainConstants.QA,
+      chatServiceDomain: ChatServerDomainConstants.QA,
+      apiVersionIOS: ApiVersionIosConstants.QA,
+      dioKit: UME_KIT.OPEN,
       umeKit: UME_KIT.CLOSE,
-      apiLog: false,
+      apiLog: true,
     ),
   };
 
@@ -119,7 +119,7 @@ class HTTPConfig {
   static String serverPath = '/apiPlat/';
   static String apiVersion = '1.0.0';
   static String baseToken = 'Basic bHBEcml2ZXJBcHA6QWExMjM0NTY=';
-  static String terminal = 'transport';
+  static String terminal = 'shipper';
   static HTTP_REQUEST_APP_TYPE appType = HTTP_REQUEST_APP_TYPE.TMS;
   static bool API_LOG = false;
 

@@ -10,7 +10,8 @@ class H5PageManager {
     Navigator.push(
       NavigatorProvider.navigatorContext,
       new MaterialPageRoute(builder: (BuildContext context) {
-        return WebViewPage(urlString: url, titleStr: '用户使用协议', showProgress: true);
+        return WebViewPage(
+            urlString: url, titleStr: '用户使用协议', showProgress: true);
       }),
     );
   }
@@ -21,7 +22,20 @@ class H5PageManager {
     Navigator.push(
       NavigatorProvider.navigatorContext,
       new MaterialPageRoute(builder: (BuildContext context) {
-        return WebViewPage(urlString: url, titleStr: '隐私政策', showProgress: true);
+        return WebViewPage(
+            urlString: url, titleStr: '隐私政策', showProgress: true);
+      }),
+    );
+  }
+
+  /// 跳转到平台交易规则协议
+  static void navigator2PlatformTransactionRulesPage() {
+    String url = H5UrlManager.getPlatformTransactionRules();
+    Navigator.push(
+      NavigatorProvider.navigatorContext,
+      new MaterialPageRoute(builder: (BuildContext context) {
+        return WebViewPage(
+            urlString: url, titleStr: '平台交易规则协议', showProgress: true);
       }),
     );
   }
@@ -38,6 +52,17 @@ class H5PageManager {
           clearCache: false,
           webviewPopBySelf: true,
         );
+      }),
+    );
+  }
+
+  /// 跳转到数字签约页面
+  static Future navigator2SigningPage(String url, String titleStr) {
+    return Navigator.push(
+      NavigatorProvider.navigatorContext,
+      new MaterialPageRoute(builder: (BuildContext context) {
+        return WebViewPage(
+            urlString: url, titleStr: titleStr, showProgress: true);
       }),
     );
   }

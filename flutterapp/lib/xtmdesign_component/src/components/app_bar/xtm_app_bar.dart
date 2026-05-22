@@ -39,6 +39,8 @@ class XtmAppBar extends StatelessWidget implements PreferredSizeWidget {
   /// pop事件携带的参数
   final Map<String, dynamic> popParams;
 
+  final void Function() onBackPressed;
+
   XtmAppBar({
     Key key,
     this.title,
@@ -48,6 +50,7 @@ class XtmAppBar extends StatelessWidget implements PreferredSizeWidget {
     this.backgroundColor,
     this.elevation,
     this.popParams,
+    this.onBackPressed,
   }) : super(key: key);
 
   @override
@@ -62,6 +65,10 @@ class XtmAppBar extends StatelessWidget implements PreferredSizeWidget {
       leading: leftWidget ??
           IconButton(
             onPressed: () {
+              if (onBackPressed != null) {
+                onBackPressed();
+                return;
+              }
               Navigator.pop(context, popParams);
             },
             icon: Icon(

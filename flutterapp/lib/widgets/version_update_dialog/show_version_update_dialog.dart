@@ -13,15 +13,12 @@ bool _alreadyShowDialog = false;
 void showVersionUpdateDialog() {
   if (_alreadyShowDialog) return;
   _alreadyShowDialog = true;
-  Map param = {};
-  param['deviceType'] = Platform.isIOS ? 'ios' : 'android';
-  param['branchType'] = '4';
+  Map param = {'deviceType': Platform.isIOS ? 'ios' : 'android', 'branchType': '4'};
   xtmApi.auth.versionUpdate(params: param).then((res) {
     String downloadUrl = res['url'];
     String boxUrl = res['boxUrl'];
     String latestVersion = res['version'];
-    _showVersionUpdateDialog(
-        latestVersion: latestVersion, downloadUrl: downloadUrl, boxUrl: boxUrl);
+    _showVersionUpdateDialog(latestVersion: latestVersion, downloadUrl: downloadUrl, boxUrl: boxUrl);
   }).catchError((err) {
     _alreadyShowDialog = false;
   });
@@ -49,11 +46,8 @@ void _showVersionUpdateDialog({String latestVersion, String downloadUrl, String 
 
   if (Platform.isIOS) {
     xtmShowVersionUpdateDialog(NavigatorProvider.navigatorContext,
-        latestVersionDesc: latestVersionDesc,
-        currentVersionDesc: curVersionDesc,
-        hiddenBoxButton: true, onLeftTap: () {
-      UpDataManage.downLoad(NavigatorProvider.navigatorContext, downloadUrl, boxUrl,
-          callback: (bool isSuccess) {
+        latestVersionDesc: latestVersionDesc, currentVersionDesc: curVersionDesc, hiddenBoxButton: true, onLeftTap: () {
+      UpDataManage.downLoad(NavigatorProvider.navigatorContext, downloadUrl, boxUrl, callback: (bool isSuccess) {
         _alreadyShowDialog = false;
       });
     });
@@ -68,8 +62,7 @@ void _showVersionUpdateDialog({String latestVersion, String downloadUrl, String 
       XtmToast.warn('未获取到下载链接，请联系管理员');
       _alreadyShowDialog = false;
     } else {
-      UpDataManage.downLoad(NavigatorProvider.navigatorContext, downloadUrl, boxUrl,
-          callback: (bool isSuccess) {
+      UpDataManage.downLoad(NavigatorProvider.navigatorContext, downloadUrl, boxUrl, callback: (bool isSuccess) {
         _alreadyShowDialog = false;
       });
     }

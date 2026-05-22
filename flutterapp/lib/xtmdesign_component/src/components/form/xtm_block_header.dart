@@ -15,11 +15,13 @@ enum HeaderLineType {
 class XtmBlockHeader extends StatelessWidget {
   final String headerTitle;
   final HeaderLineType lineType;
+  final List<Widget> children;
 
   const XtmBlockHeader({
     Key key,
     this.headerTitle,
     this.lineType = HeaderLineType.BOTTOM_LINE,
+    this.children = const [],
   }) : super(key: key);
 
   @override
@@ -57,6 +59,8 @@ class XtmBlockHeader extends StatelessWidget {
               headerTitle,
               style: TextStyle(color: Colors.black, fontSize: 16, fontWeight: FontWeight.bold),
             ),
+            SizedBox(width: 5),
+            ...children,
           ],
         )
       ],

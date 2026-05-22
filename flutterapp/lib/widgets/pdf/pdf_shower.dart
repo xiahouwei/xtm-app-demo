@@ -30,15 +30,12 @@ class _PDFViewerPageState extends State<PDFViewerPage> with WidgetsBindingObserv
     pdfFilePath = widget.path;
   }
 
-  ///使用dio 下载文件
   Future<String> downApkFunction() async {
     {
-      ///手机储存目录
       final directory = await getTemporaryDirectory();
       String savePath = directory.path;
       String appName = "temp.pdf";
       String fileFullPath = "${savePath}/${appName}";
-      print('===========fileFullPath:$fileFullPath');
       Dio dio = Dio();
 
       String token = xtmGlobalStore.auth.token ?? '';
@@ -127,22 +124,17 @@ class _PDFViewerPageState extends State<PDFViewerPage> with WidgetsBindingObserv
         setState(() {
           errorMessage = error.toString();
         });
-        print(error.toString());
       },
       onPageError: (page, error) {
         setState(() {
           errorMessage = '$page: ${error.toString()}';
         });
-        print('$page: ${error.toString()}');
       },
       onViewCreated: (PDFViewController pdfViewController) {
         _controller.complete(pdfViewController);
       },
-      onLinkHandler: (String uri) {
-        print('goto uri: $uri');
-      },
+      onLinkHandler: (String uri) {},
       onPageChanged: (int page, int total) {
-        print('page change: $page/$total');
         setState(() {
           currentPage = page;
         });
