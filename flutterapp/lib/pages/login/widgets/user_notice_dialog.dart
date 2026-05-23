@@ -1,24 +1,29 @@
 import 'dart:io';
-
+import 'dart:async';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_proj/store/global_store.dart';
 import 'package:flutter_proj/theme/xtm_color.dart';
 import 'package:flutter_proj/utils/navigator_provider_utils.dart';
 import 'package:flutter_proj/common/h5_page/h5_page_manage.dart';
+import 'package:flutter_proj/utils/async_utils.dart';
 
 class UserNoticeDialog {
+  static Completer<void> _dialogPromise;
   static showProtocolView() {
-    showDialog(
-      context: NavigatorProvider.navigatorContext,
-      barrierDismissible: false,
-      builder: (BuildContext context) => WillPopScope(
-        child: _buildDialogView(),
-        onWillPop: () async {
-          return false;
-        },
-      ),
-    );
+    return AsyncUtils.PromiseFunction<void>((promise) async {
+      _dialogPromise = promise;
+      showDialog(
+        context: NavigatorProvider.navigatorContext,
+        barrierDismissible: false,
+        builder: (context) => WillPopScope(
+          child: _buildDialogView(),
+          onWillPop: () async {
+            return false;
+          },
+        ),
+      );
+    });
   }
 
   static Widget _buildDialogView() {
@@ -147,6 +152,9 @@ class UserNoticeDialog {
       onPressed: () {
         xtmGlobalStore.auth.setShowSecretDialog(false);
         Navigator.of(NavigatorProvider.navigatorContext).pop();
+        if (_dialogPromise != null) {
+          _dialogPromise.complete();
+        }
       },
     );
   }
