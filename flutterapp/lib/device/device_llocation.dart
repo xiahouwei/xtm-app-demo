@@ -51,10 +51,12 @@ class XtmLocation {
         } else {
           locationResult['locationTime'] = result['locationTime'];
         }
-        locationResult['latitude'] =
-            result['latitude'] == null ? 0 : (result['latitude'] * 1e6).truncate() / 1e6;
-        locationResult['longitude'] =
-            result['longitude'] == null ? 0 : (result['longitude'] * 1e6).truncate() / 1e6;
+        locationResult['latitude'] = result['latitude'] == null
+            ? 0
+            : (double.tryParse(result['latitude'].toString()) * 1e6).truncate() / 1e6;
+        locationResult['longitude'] = result['longitude'] == null
+            ? 0
+            : (double.tryParse(result['longitude'].toString()) * 1e6).truncate() / 1e6;
         locationResult['address'] = result['address'] ?? "";
         locationResult['speed'] = result['speed'];
         if (_locationCompleter != null && !_locationCompleter.isCompleted) {
